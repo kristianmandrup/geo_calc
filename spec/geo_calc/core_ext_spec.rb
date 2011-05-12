@@ -3,7 +3,7 @@ require 'spec_helper'
 # - www.movable-type.co.uk/scripts/latlong.html
 describe GeoPoint do 
   describe 'ruby core Class extensions' do
-    describe 'Fixnum and Float' do
+    describe NumericGeoExt do
       describe '#to_rad' do
         it 'should convert 0 degrees to 0 radians' do
           0.to_rad.should == 0
@@ -43,6 +43,37 @@ describe GeoPoint do
           360.to_deg.should == 360.to_degrees
         end
       end
+      
+      # describe '#to_precision_fixed' do
+      #   it 'should make precision 4' do
+      #     1.123456.to_precision_fixed(4).should == '1.123'
+      #   end
+      # end
+    end # NumericGeoExt
+    
+    describe NumericLatLngExt do
+      describe '#to_lat' do      
+        it 'should return latitude degree value for 360' do
+          360.to_lat.should == 0
+        end
+
+        it 'should normalize degrees before converting to latitude, so 361 becomes 1' do
+          361.to_lat.should == 1
+        end
+
+        describe '#normalize' do
+          it 'should turn 180 deg and normalize' do
+            361.normalize_deg(180).should == 181
+          end
+          it 'should normalize deg' do
+            361.normalize_deg.should == 1
+          end
+
+          it 'should alias with #normalize_degrees' do
+            362.normalize_degrees.should == 2
+          end
+        end
+      end      
     end
   end
 end

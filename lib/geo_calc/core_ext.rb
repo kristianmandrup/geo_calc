@@ -29,35 +29,53 @@ module NumericGeoExt
   # @param   {Number} precision: Number of significant digits to appear in the returned string
   # @returns {String} A string representation of number which contains precision significant digits
   def to_precision_fixed precision
-    numb = Math.abs(self)  # can't take log of -ve number...
+    numb = self.abs  # can't take log of -ve number...
     sign = self < 0 ? '-' : '';
 
     # can't take log of zero
     if (numb == 0) 
-      n = '0.'
-      n += '0' while precision -= 1
-      n
+      n = '0.' 
+      while (precision -= 1) > 0
+        n += '0' 
+      end
     end
 
-    scale = Math.ceil(Math.log(numb)*Math.log10);  # no of digits before decimal
-    n = (Math.round(numb * Math.pow(10, precision-scale))).to_s
+    scale = (Math.log(numb) * log10e).ceil # no of digits before decimal
+    n = (numb * (precision - scale)**10).round.to_s
     if (scale > 0)   # add trailing zeros & insert decimal as required
-      l = scale - n.length;
-      n = n + '0' while l -= 1 > 0
-      if (scale < n.length) 
+      l = scale - n.length
+
+      while (l -= 1) > 0
+        n += '0' 
+      end
+
+      if scale < n.length 
         n = n.slice(0,scale) + '.' + n.slice(scale)
       else # prefix decimal and leading zeros if required
-        n = '0' + n while scale += 1 < 0
-        n = '0.' + n;
+        while (scale += 1) < 0
+          n = '0' + n 
+        end
+        n = '0.' + n
       end 
     end
     sign + n
+  end
+
+  def normalize_deg shift = 0
+    (self + shift) % 360 
+  end
+  alias_method :normalize_degrees, :normalize_deg
+  
+  private
+  
+  def log10e
+    0.4342944819032518
   end
 end            
 
 module NumericLatLngExt
   def to_lat 
-    self
+    normalize_deg
   end
   alias_method :to_lng, :to_lat
     
