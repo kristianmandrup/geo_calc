@@ -4,6 +4,9 @@ coverage
 # rdoc generated
 rdoc
 
+# Gemfile
+*.lock
+
 # yard generated
 doc
 .yardoc

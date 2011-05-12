@@ -1,0 +1,68 @@
+h1. Geo calculations
+
+Geo Calculation library. Useful functions to add to your geo arsenal, fx when designing your own Geo library (gem). 
+
+h2. Install
+
+require 'geo_calc'
+
+h3. Rails 3
+
+In Gemfile:
+
+@gem 'geo_calc'@
+
+From command line, run bundler
+
+@$ bundle@
+
+h2. Status (May 12, 2011)
+
+Not yet tested (POC)
+
+h2. Quick start (Usage)
+
+<pre>
+  p1 = GeoPoint.new 51.5136, -0.0983
+  p2 = GeoPoint.new(51.4778, -0.0015
+  
+  dist = p1.distance_to(p2) # in km                                             
+
+  brng = p1.bearing_to(p2) # in degrees clockwise from north
+
+  final_brng = p1.final_bearing_to(p2) # final bearing in degrees from north  
+
+  mid = p1.midpoint_to point(p2) # midpoint between p1 and p2
+
+  dest = p1.destination_point bearing, dist # Bearing in degrees, Distance in km
+  
+  GeoPoint.intersection p1, brng1, p2, brng2 # intersection between two paths
+  
+  p1.rhumb_distance_to(p2)
+  
+  p1.bearing_to(p2)  
+  
+  p1.rhumb_destination_point(brng, dist)
+  
+  p1.lat # latitude
+  p2.lon # longitude
+  p1.to_s # string rep
+</pre>
+
+The libary also comes wih a javascript file with the same functionality. See _js/geo_calc.js_ in the _/lib_ folder
+
+h2. Contributing to geo_calc
+ 
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+h2. Copyright
+
+Copyright (c) 2011 Kristian Mandrup. See LICENSE.txt for
+further details.
+
