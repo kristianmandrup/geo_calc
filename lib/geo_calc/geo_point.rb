@@ -33,6 +33,23 @@ class GeoPoint
       raise "GeoPoint must be initialized with either one or to arguments defining the (latitude, longitude) coordinate on the map"
     end
   end
+
+  def to_arr
+    a = [lat, lng]
+    a.reverse if reverse_arr?
+  end
+
+  def reverse_arr?
+    @reverse_arr
+  end
+
+  def reverse_arr!
+    @reverse_arr = true
+  end
+
+  def normal_arr!
+    @reverse_arr = false
+  end
   
   protected
 

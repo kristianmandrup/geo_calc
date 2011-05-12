@@ -155,5 +155,29 @@ describe GeoPoint do
         end
       end
     end
+  end # initializer
+  
+  describe '#to_arr' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+
+    it 'should return GeoPoint as an array depending on state of reverse_arr' do
+      @p1.to_arr.should == [50, 5]
+    end
+
+    describe '#reverse_arr!' do    
+      it 'should reverse the array returned by #to_arr to [lng, lat]'
+        @p1.reverse_arr!
+        @p1.to_arr.should == [5, 50]
+      end
+    end
+
+    describe '#reverse_arr!' do    
+      it 'should turn effect of #to_arr back to normal [lat, lng]'
+        @p1.normal_arr!
+        @p1.to_arr.should == [50, 5]      
+      end
+    end
   end
 end
