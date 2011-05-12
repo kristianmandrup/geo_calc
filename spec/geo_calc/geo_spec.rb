@@ -31,19 +31,19 @@ describe GeoPoint do
       it 'should convert 58.3 to a String in DMS format' do
         dms = Geo.to_dms(58.3)
         dms.should be_a(String)
-        dms.should match /58.+3/
+        dms.should match /58.+18/
       end
 
       it 'should convert 58.3 to a String in DM format' do
         dm = Geo.to_dms(58.3, :dm, 2)
         dm.should be_a(String)
-        dm.should match /58.+3/
+        dm.should match /58.+18/
       end
 
       it 'should convert 58.3 to a String in D format' do
         d = Geo.to_dms(58.3, :d, 2)
         d.should be_a(String)
-        d.should match /58.+3/
+        d.should match /58.+18/
       end
     end
 

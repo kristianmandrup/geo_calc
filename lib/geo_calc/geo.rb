@@ -1,9 +1,10 @@
+require 'geo_calc/core_ext'
+
  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
  #  Geodesy representation conversion functions (c) Chris Veness 2002-2010
  #   - www.movable-type.co.uk/scripts/latlong.html
  #
  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
-
 
 # Parses string representing degrees/minutes/seconds into numeric degrees
 # 
@@ -17,14 +18,16 @@
 # @throws  ArgumentError
 
 module Geo
-  extend self
+  extend self  
+  extend ::NumericCheckExt
+  include ::NumericCheckExt
   
   def parse_dms dms_str  
     # check for signed decimal degrees without NSEW, if so return it directly
-    return dms_str if isNumeric?(dms_str)
+    return dms_str if is_numeric?(dms_str)
   
     # strip off any sign or compass dir'n & split out separate d/m/s
-    dms = dms_str.trim.replace(/^-/,'').replace(/[NSEW]$/i,'').split(/[^0-9.,]+/).trim  
+    dms = dms_str.trim.gsub(/^-/,'').gsub(/[NSEW]$/i,'').split(/[^0-9.,]+/).trim
     return nil if dms.empty?
   
     # and convert to decimal degrees...
@@ -42,10 +45,10 @@ module Geo
     else
       nil
     end
-    deg = -deg if (/^-|[WS]$/i.match(dms_str.trim)) # take '-', west and south as -ve
+    return nil if !deg
+    deg = (deg * -1) if (/^-|[WS]$/i.match(dms_str.trim)) # take '-', west and south as -ve
     deg.to_f
   end
-
 
   # Convert decimal degrees to deg/min/sec format
   #  - degree, prime, double-prime symbols are added, but sign is discarded, though no compass
@@ -79,34 +82,34 @@ module Geo
       end
     end
   
-    deg = Math.abs(deg);  # (unsigned result ready for appending compass dir'n)
+    deg = deg.abs # (unsigned result ready for appending compass dir'n)
   
     case format
     when :d
-      d = deg.toFixed(dp)       # round degrees
+      d = deg.to_fixed(dp)       # round degrees
       d = '0' + d if (d<100)    # pad with leading zeros
       d = '0' + d if (d<10) 
       dms = d + '\u00B0'        # add º symbol
     when :dm
       min = (deg*60).to_fixed(dp)   # convert degrees to minutes & round
-      d = Math.floor(min / 60)      # get component deg/min
+      d = (min / 60).floor          # get component deg/min
       m = (min % 60).to_fixed(dp)   # pad with trailing zeros
       d = '0' + d if (d<100)        # pad with leading zeros
       d = '0' + d if (d<10)
       m = '0' + m if (m<10) 
       dms = d + '\u00B0' + m + '\u2032'  # add º, ' symbols
     when :dms
-      sec = (deg*3600).to_fixed(dp)   # convert degrees to seconds & round
-      d = Math.floor(sec / 3600)      # get component deg/min/sec
-      m = Math.floor(sec/60) % 60
-      s = (sec % 60).toFixed(dp)      # pad with trailing zeros
-      d = '0' + d if (d<100)          # pad with leading zeros
-      d = '0' + d if (d<10) 
-      m = '0' + m if (m<10) 
-      s = '0' + s if (s<10) 
-      dms = d + '\u00B0' + m + '\u2032' + s + '\u2033'  # add º, ', " symbols
+      sec = (deg * 3600).round   # convert degrees to seconds & round
+      d = (sec / 3600).floor          # get component deg/min/sec
+      m = ((sec / 60) % 60).floor
+      s = (sec % 60).to_fixed(dp)     # pad with trailing zeros
+      d = "0#{d}" if (d.to_i < 100)          # pad with leading zeros
+      d = "0#{d}" if (d.to_i < 10) 
+      m = "0#{m}" if (m.to_i < 10) 
+      s = "0#{s}" if (s.to_i < 10) 
+      dms = d.concat("\u00B0", m, "\u2032", s, "\u2033")  # add º, ', " symbols
+      # dms = "#{d}°#{m}'#{s}\""
     end
-  
     return dms
   end
 
@@ -148,5 +151,13 @@ module Geo
     deg = (deg.to_f + 360) % 360  # normalise -ve values to 180º..360º
     brng =  to_dms deg, format, dp
     brng.replace /360/, '0'  # just in case rounding took us up to 360º!
-  end
+  end 
+  
+  protected
+
+  include NumericCheckExt
+end
+
+class String
+  include ::Geo
 end

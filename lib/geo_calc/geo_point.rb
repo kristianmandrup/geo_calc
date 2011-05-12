@@ -53,13 +53,7 @@ class GeoPoint
   
   protected
 
-  def is_numeric? arg
-    arg.is_a? Numeric
-  end
-
-  def check_numeric! arg
-    raise ArgumentError, "Argument must be Numeric" if !is_numeric? arg
-  end
+  include NumericCheckExt
   
   def create_from_one points, rad = 6371
     create_from_two points.to_lat_lng, rad

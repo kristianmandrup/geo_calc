@@ -1,4 +1,14 @@
-require 'geo_calc/geo'
+module NumericCheckExt
+  def is_numeric? arg
+    arg.is_a? Numeric
+  end  
+
+  alias_method :is_num?, :is_numeric?
+  
+  def check_numeric! arg
+    raise ArgumentError, "Argument must be Numeric" if !is_numeric? arg
+  end  
+end
 
 module NumericGeoExt
   # Converts numeric degrees to radians
@@ -30,7 +40,7 @@ module NumericGeoExt
   # 
   # @param   {Number} precision: Number of significant digits to appear in the returned string
   # @returns {String} A string representation of number which contains precision significant digits
-  def to_precision_fixed precision
+  def to_precision precision
     numb = self.abs  # can't take log of -ve number...
     sign = self < 0 ? '-' : '';
 
@@ -39,7 +49,8 @@ module NumericGeoExt
       n = '0.' 
       while (precision -= 1) > 0
         n += '0' 
-      end
+      end 
+      return n
     end
 
     scale = (Math.log(numb) * Math.log10e).ceil # no of digits before decimal
@@ -62,6 +73,7 @@ module NumericGeoExt
     end
     sign + n
   end
+  alias_method :to_fixed, :to_precision
 
   def normalize_deg shift = 0
     (self + shift) % 360 
@@ -71,7 +83,7 @@ module NumericGeoExt
 end            
 
 module Math
-  def log10e
+  def self.log10e
     0.4342944819032518
   end
 end
@@ -91,6 +103,10 @@ class Array
   def to_lat_lng
     raise "Array must contain at least two elements to be converted to latitude and longitude" if !size >= 2
     [first.to_lat, self[1].to_lng]
+  end 
+  
+  def trim
+    join.trim
   end
 end
 
@@ -123,8 +139,18 @@ class Hash
 end  
 
 class String
-  include Geo
-  
+  def concat *args
+    args.inject(self) do |res, arg| 
+      x = arg.is_a?(String) ? arg : arg.to_s
+      res << x
+      res
+    end
+  end
+
+  def trim
+    strip
+  end
+    
   def to_lat_lng  
     self.split(',').to_lat_lng
   end

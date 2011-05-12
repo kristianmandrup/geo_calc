@@ -44,11 +44,18 @@ describe GeoPoint do
         end
       end
       
-      # describe '#to_precision_fixed' do
+      # describe '#to_fixed' do
       #   it 'should make precision 4' do
       #     1.123456.to_precision_fixed(4).should == '1.123'
       #   end
       # end
+
+      # describe '#to_precision' do
+      #   it 'should alis to_fixed' do
+      #     1.123456.to_precision(4).should == '1.123'
+      #   end
+      # end
+
     end # NumericGeoExt
     
     describe NumericLatLngExt do

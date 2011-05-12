@@ -24,7 +24,7 @@ describe GeoCalc do
   context 'p1= (50 03 59N, 005 42 53W) .. p2= (58 38 38N, 003 04 12W)' do
     before do
       @p1 = GeoPoint.new "50 03 59N", "005 42 53W"
-      @p2 = GeoPoint.new "58 38 38N, 003 04 12W"        
+      @p2 = GeoPoint.new "58 38 38N, 003 04 12W"
     end
 
     # Distance: 968.9 km
