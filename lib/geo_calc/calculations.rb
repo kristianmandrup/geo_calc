@@ -3,7 +3,7 @@ require 'geo_calc/core_ext'
 
  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
  #  Latitude/longitude spherical geodesy formulae & scripts (c) Chris Veness 2002-2010            
- #   - www.movable-type.co.uk/scripts/latlong.html                                                
+ #   - www.movable-type.co.uk/scripts/latlong.html
  #                                                                                                
 
 module GeoCalc  
