@@ -32,20 +32,19 @@ module Geo
     return nil if dms.empty?
   
     # and convert to decimal degrees...
-    deg = case dms.length
-      case 3: # interpret 3-part result as d/m/s
-         dms[0]/1 + dms[1]/60 + dms[2]/3600;
-      case 2:  # interpret 2-part result as d/m
-        dms[0]/1 + dms[1]/60
-      case 1:  # just d (possibly decimal) or non-separated dddmmss
-        d = dms[0];
-        # check for fixed-width unseparated format eg 0033709W
-        d = "0#{d}" if (/[NS]/i.match(dms_str)) # - normalise N/S to 3-digit degrees
-        d = "#{d.slice(0,3)/1}#{deg.slice(3,5)/60}#{deg.slice(5)/3600}" if (/[0-9]{7}/.match(deg)) 
-        d
-      else
-        nil
-      end
+    deg = case dms.length      
+    when 3 # interpret 3-part result as d/m/s
+       dms[0]/1 + dms[1]/60 + dms[2]/3600
+    when 2 # interpret 2-part result as d/m
+      dms[0]/1 + dms[1]/60        
+    when 1 # just d (possibly decimal) or non-separated dddmmss        
+      d = dms[0];
+      # check for fixed-width unseparated format eg 0033709W
+      d = "0#{d}" if (/[NS]/i.match(dms_str)) # - normalise N/S to 3-digit degrees
+      d = "#{d.slice(0,3)/1}#{deg.slice(3,5)/60}#{deg.slice(5)/3600}" if (/[0-9]{7}/.match(deg)) 
+      d
+    else
+      nil
     end
     deg = -deg if (/^-|[WS]$/i.match(dms_str.trim)) # take '-', west and south as -ve
     deg.to_f
@@ -90,27 +89,27 @@ module Geo
   
     case format
     when :d
-      d = deg.toFixed(dp)     # round degrees
-      if (d<100) d = '0' + d  # pad with leading zeros
-      if (d<10) d = '0' + d
-      dms = d + '\u00B0'      # add º symbol
+      d = deg.toFixed(dp)       # round degrees
+      d = '0' + d if (d<100)    # pad with leading zeros
+      d = '0' + d if (d<10) 
+      dms = d + '\u00B0'        # add º symbol
     when :dm
-      min = (deg*60).to_fixed(dp)  # convert degrees to minutes & round
-      d = Math.floor(min / 60)    # get component deg/min
-      m = (min % 60).to_fixed(dp)  # pad with trailing zeros
-      if (d<100) d = '0' + d          # pad with leading zeros
-      if (d<10) d = '0' + d
-      if (m<10) m = '0' + m
+      min = (deg*60).to_fixed(dp)   # convert degrees to minutes & round
+      d = Math.floor(min / 60)      # get component deg/min
+      m = (min % 60).to_fixed(dp)   # pad with trailing zeros
+      d = '0' + d if (d<100)        # pad with leading zeros
+      d = '0' + d if (d<10)
+      m = '0' + m if (m<10) 
       dms = d + '\u00B0' + m + '\u2032'  # add º, ' symbols
     when :dms
-      sec = (deg*3600).to_fixed(dp)  # convert degrees to seconds & round
-      d = Math.floor(sec / 3600)    # get component deg/min/sec
+      sec = (deg*3600).to_fixed(dp)   # convert degrees to seconds & round
+      d = Math.floor(sec / 3600)      # get component deg/min/sec
       m = Math.floor(sec/60) % 60
-      s = (sec % 60).toFixed(dp)    # pad with trailing zeros
-      if (d<100) d = '0' + d            # pad with leading zeros
-      if (d<10) d = '0' + d
-      if (m<10) m = '0' + m
-      if (s<10) s = '0' + s
+      s = (sec % 60).toFixed(dp)      # pad with trailing zeros
+      d = '0' + d if (d<100)          # pad with leading zeros
+      d = '0' + d if (d<10) 
+      m = '0' + m if (m<10) 
+      s = '0' + s if (s<10) 
       dms = d + '\u00B0' + m + '\u2032' + s + '\u2033'  # add º, ', " symbols
     end
   
@@ -138,7 +137,7 @@ module Geo
   # @param   {Number} [dp=0|2|4]: No of decimal places to use - default 0 for dms, 2 for dm, 4 for d
   # @returns {String} Deg/min/seconds
 
-  def to_lon deg, format, dp) {
+  def to_lon deg, format, dp
     lon = to_dms deg, format, dp
     lon == '' ? '' : lon + (deg<0 ? 'W' : 'E')
   end

@@ -22,7 +22,6 @@ module GeoCalc
     # default 4 sig figs reflects typical 0.3% accuracy of spherical model
     precision ||= 4
 
-    R = radius
     lat1 = lat.to_rad
     lon1 = lon.to_rad
 
@@ -34,7 +33,7 @@ module GeoCalc
 
     a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon/2) * Math.sin(dlon/2)
     c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-    d = R * c
+    d = radius * c
     d.to_precision_fixed(precision)
   end
   
@@ -201,7 +200,6 @@ module GeoCalc
   # Returns Numeric: Distance in km between this point and destination point
   
   def rhumb_distance_to point
-    R = this.radius
     lat1 = lat.to_rad
     lat2 = point.lat.to_rad
 
@@ -218,7 +216,7 @@ module GeoCalc
     # if dlon over 180° take shorter rhumb across 180° meridian:
     dlon = 2*Math::PI - dlon if (dlon > Math::PI)
 
-    dist = Math.sqrt(dlat*dlat + q*q*dlon*dlon) * R; 
+    dist = Math.sqrt(dlat*dlat + q*q*dlon*dlon) * radius; 
 
     dist.to_precision_fixed(4)  # 4 sig figures reflects typical 0.3% accuracy of spherical model
   end
@@ -242,7 +240,7 @@ module GeoCalc
 
     brng = Math.atan2(dlon, dphi);
 
-    brng.to_deg+360) % 360
+    (brng.to_deg+360) % 360
   end
 
   
@@ -254,8 +252,7 @@ module GeoCalc
   # @returns {LatLon} Destination point
   
   def rhumb_destination_point brng, dist
-    R = radius
-    d = dist / R  # d = angular distance covered on earth's surface
+    d = dist / radius  # d = angular distance covered on earth's surface
     lat1 = lat.to_rad
     lon1 = lon.to_rad
     brng = brng.to_rad

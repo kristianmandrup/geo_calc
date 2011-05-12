@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # - www.movable-type.co.uk/scripts/latlong.html
 describe GeoPoint do 
-  describe 'initializer' do
+  describe '#initializer' do
     describe '1 argument' do
       describe 'single String' do
         describe '50.1, 5.0 ' do

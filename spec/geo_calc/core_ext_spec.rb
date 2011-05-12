@@ -1,0 +1,48 @@
+require 'spec_helper'
+
+# - www.movable-type.co.uk/scripts/latlong.html
+describe GeoPoint do 
+  describe 'ruby core Class extensions' do
+    describe 'Fixnum and Float' do
+      describe '#to_rad' do
+        it 'should convert 0 degrees to 0 radians' do
+          0.to_rad.should == 0
+        end
+
+        it 'should convert 180 degrees to PI radians' do
+          180.to_rad.should == Math::PI        
+        end
+
+        it 'should convert 360 degrees to 6.28 radians' do
+          360.to_rad.should == Math::PI*2                
+        end
+      end
+
+      describe '#to_radians' do      
+        it 'should alias to_rad' do
+          360.to_rad.should == 360.to_radians
+        end
+      end
+
+      describe '#to_deg' do
+        it 'should convert 0 radians to 0 degrees' do
+          0.to_deg.should == 0
+        end
+
+        it 'should convert PI radians to 180 degrees' do
+          180.to_rad.to_deg.should be_within(0.01).of(180)
+        end
+
+        it 'should convert 6.28 radians to 360 degrees' do
+          360.to_rad.to_deg.should be_within(0.01).of(360)
+        end
+      end
+      
+      describe '#to_degrees' do      
+        it 'should alias to_deg' do
+          360.to_deg.should == 360.to_degrees
+        end
+      end
+    end
+  end
+end
