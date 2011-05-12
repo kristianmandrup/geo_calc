@@ -2,10 +2,6 @@
  #  Geodesy representation conversion functions (c) Chris Veness 2002-2010
  #   - www.movable-type.co.uk/scripts/latlong.html
  #
- #  Sample usage:
- #    lat = Geo.parseDMS('51° 28′ 40.12″ N')
- #    lon = Geo.parseDMS('000° 00′ 05.31″ W')
- #    p1 = new LatLon(lat, lon)
  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 
@@ -18,7 +14,7 @@
 # 
 # @param   {String|Number} dmsStr: Degrees or deg/min/sec in variety of formats
 # @returns {Number} Degrees as decimal number
-# @throws  {TypeError} dmsStr is an object, perhaps DOM object without .value?
+# @throws  ArgumentError
 
 module Geo
   extend self
@@ -55,14 +51,14 @@ module Geo
   #  - degree, prime, double-prime symbols are added, but sign is discarded, though no compass
   #    direction is added
   # 
-  # @private
+  # 
   # @param   {Number} deg: Degrees
   # @param   {String} [format=dms]: Return value as 'd', 'dm', 'dms'
   # @param   {Number} [dp=0|2|4]: No of decimal places to use - default 0 for dms, 2 for dm, 4 for d
   # @returns {String} deg formatted as deg/min/secs according to specified format
   # @throws  {TypeError} deg is an object, perhaps DOM object without .value?
 
-  def to_dms deg, dp, format = :dms  
+  def to_dms deg, format = :dms, dp = nil
     deg = begin
       deg.to_f
     rescue
@@ -78,10 +74,8 @@ module Geo
         4
       when :dm 
         2
-      when 'dms'
-        0
       else
-        0  # be forgiving on invalid format
+        0 # default
       end
     end
   
@@ -124,7 +118,7 @@ module Geo
   # @param   {Number} [dp=0|2|4]: No of decimal places to use - default 0 for dms, 2 for dm, 4 for d
   # @returns {String} Deg/min/seconds
 
-  def to_lat deg, format, dp
+  def to_lat deg, format = :dms, dp = 0
     lat = to_dms deg, format, dp
     lat == '' ? '' : lat.slice(1) + (deg<0 ? 'S' : 'N')  # knock off initial '0' for lat!
   end
@@ -137,7 +131,7 @@ module Geo
   # @param   {Number} [dp=0|2|4]: No of decimal places to use - default 0 for dms, 2 for dm, 4 for d
   # @returns {String} Deg/min/seconds
 
-  def to_lon deg, format, dp
+  def to_lon deg, format = :dms, dp = 0
     lon = to_dms deg, format, dp
     lon == '' ? '' : lon + (deg<0 ? 'W' : 'E')
   end
@@ -150,7 +144,7 @@ module Geo
   # @param   {Number} [dp=0|2|4]: No of decimal places to use - default 0 for dms, 2 for dm, 4 for d
   # @returns {String} Deg/min/seconds
 
-  def to_brng deg, format, dp
+  def to_brng deg, format = :dms, dp = 0
     deg = (deg.to_f + 360) % 360  # normalise -ve values to 180º..360º
     brng =  to_dms deg, format, dp
     brng.replace /360/, '0'  # just in case rounding took us up to 360º!

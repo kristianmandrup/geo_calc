@@ -1,3 +1,5 @@
+require 'geo_calc/geo'
+
 module NumericGeoExt
   # Converts numeric degrees to radians
   def to_rad
@@ -40,7 +42,7 @@ module NumericGeoExt
       end
     end
 
-    scale = (Math.log(numb) * log10e).ceil # no of digits before decimal
+    scale = (Math.log(numb) * Math.log10e).ceil # no of digits before decimal
     n = (numb * (precision - scale)**10).round.to_s
     if (scale > 0)   # add trailing zeros & insert decimal as required
       l = scale - n.length
@@ -66,12 +68,13 @@ module NumericGeoExt
   end
   alias_method :normalize_degrees, :normalize_deg
   
-  private
-  
+end            
+
+module Math
   def log10e
     0.4342944819032518
   end
-end            
+end
 
 module NumericLatLngExt
   def to_lat 
@@ -120,14 +123,18 @@ class Hash
 end  
 
 class String
+  include Geo
+  
   def to_lat_lng  
     self.split(',').to_lat_lng
   end
   
   def to_lat
+    parse_dms(self).to_f.to_lat
   end
 
   def to_lng
+    parse_dms(self).to_f.to_lat
   end
 end
 
