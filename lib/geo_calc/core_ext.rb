@@ -162,19 +162,23 @@ class String
   def trim
     strip
   end
+
+  def geo_clean
+    self.gsub(/^\(/, '').gsub(/\)$/, '').trim
+  end
     
   def to_lat_lng  
-    self.split(',').to_lat_lng
+    geo_clean.split(',').to_lat_lng
   end
   
   def to_lat
     raise "An empty String has no latitude" if empty?
-    parse_dms(self).to_f.to_lat
+    parse_dms(geo_clean).to_f.to_lat
   end
 
   def to_lng
     raise "An empty String has no latitude" if empty?
-    parse_dms(self).to_f.to_lat
+    parse_dms(geo_clean).to_f.to_lng
   end
 end
 

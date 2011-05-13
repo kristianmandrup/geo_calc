@@ -234,7 +234,7 @@ module GeoCalc
     dlon = (point.lon - lon).to_rad
 
     dphi = Math.log(Math.tan(lat2/2+Math::PI/4) / Math.tan(lat1/2+Math::PI/4))
-    if (Math.abs(dlon) > Math::PI) 
+    if dlon.abs > Math::PI
       dlon = dlon>0 ? -(2*Math::PI-dlon) : (2*Math::PI+dlon);
     end
 
@@ -262,7 +262,7 @@ module GeoCalc
     dphi = Math.log(Math.tan(lat2/2+Math::PI/4)/Math.tan(lat1/2+Math::PI/4))
 
     q = begin
-      dLat/dPhi
+      dlat/dphi
     rescue 
       Math.cos(lat1) # E-W line gives dPhi=0
     end
@@ -270,7 +270,7 @@ module GeoCalc
     var dlon = d*Math.sin(brng)/q
     # check for some daft bugger going past the pole
 
-    if (Math.abs(lat2) > Math::PI/2) 
+    if lat2.abs > Math::PI/2
       lat2 = lat2>0 ? Math::PI-lat2 : -(Math::PI-lat2)
     end
     lon2 = (lon1+dlon+3*Math::PI)%(2*Math::PI) - Math::PI
@@ -288,7 +288,7 @@ module GeoCalc
   # Returns {Numeric|String}: Numeric degrees if no format specified, otherwise deg/min/sec
   # 
   
-  def lat format, dp
+  def to_lat format = :dms, dp = 0
     return lat if !format
     Geo.to_lat lat, format, dp
   end
@@ -303,7 +303,7 @@ module GeoCalc
   # 
   # @requires Geo
   
-  def lon format, dp
+  def to_lon format, dp
     return lon if !format
     Geo.to_lon lon, format, dp
   end
@@ -313,18 +313,19 @@ module GeoCalc
   # 
   # @param   {String} [format]: Return value as 'd', 'dm', 'dms'
   # @param   {Number} [dp=0|2|4]: No of decimal places to display
+  
   # @returns {String} Comma-separated latitude/longitude
   # 
-  # @requires Geo
   
-  def to_s dp, format = :dps
-    format ||= 'dms'
-
+  def to_s format = :dms, dp = 0 
+    format ||= :dms
+  
     return '-,-' if !lat || !lon
-
+  
+    puts "lat: #{lat}, #{format}, #{dp}"
     _lat = Geo.to_lat lat, format, dp
     _lon = Geo.to_lon lon, format, dp
-
+  
     "#{_lat}, #{_lon}"
   end
 end

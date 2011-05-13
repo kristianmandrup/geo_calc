@@ -122,8 +122,8 @@ module Geo
   # @returns {String} Deg/min/seconds
 
   def to_lat deg, format = :dms, dp = 0
-    lat = to_dms deg, format, dp
-    lat == '' ? '' : lat.slice(1) + (deg<0 ? 'S' : 'N')  # knock off initial '0' for lat!
+    _lat = to_dms deg, format, dp
+    _lat == '' ? '' : _lat.slice(1) + (deg<0 ? 'S' : 'N')  # knock off initial '0' for lat!
   end
 
 

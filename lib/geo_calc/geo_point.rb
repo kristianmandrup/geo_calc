@@ -21,9 +21,24 @@ class GeoPoint
   # - Numeric lon: longitude in numeric degrees
   # - Numeric [rad=6371]: radius of earth if different value is required from standard 6,371km
 
-  def initializer *args
+  attr_reader :lat, :lon, :unit, :radius
+  
+  (Symbol.lng_symbols - [:lon]).each do |sym|
+    class_eval %{
+      alias_method :#{sym}, :lon
+    }
+  end    
+
+  (Symbol.lat_symbols - [:lat]).each do |sym|
+    class_eval %{
+      alias_method :#{sym}, :lat
+    }
+  end    
+
+
+  def initialize *args
     rad = args.delete(args.size) if is_numeric?(args.last) && args.last.is_between?(6350, 6380)
-    rad ||= 6371 # default    
+    rad ||= 6371 # default
     case args.size
     when 1
       create_from_one *args, rad
@@ -56,15 +71,15 @@ class GeoPoint
   include NumericCheckExt
   
   def create_from_one points, rad = 6371
-    create_from_two points.to_lat_lng, rad
+    create_from_two *points.to_lat_lng, rad
   end
   
   def create_from_two lat, lon, rad = 6371  
     rad ||= 6371  # earth's mean radius in km
-    # only accept numbers or valid numeric strings
     @lat    = lat.to_lat
     @lon    = lon.to_lng
     @radius = rad
+    @unit = :degrees
   end  
 end
 
