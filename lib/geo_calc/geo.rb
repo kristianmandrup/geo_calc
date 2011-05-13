@@ -81,34 +81,40 @@ module Geo
         0 # default
       end
     end
+    dp ||= 0
   
     deg = deg.abs # (unsigned result ready for appending compass dir'n)
   
     case format
     when :d
-      d = deg.to_fixed(dp)       # round degrees
-      d = '0' + d if (d<100)    # pad with leading zeros
-      d = '0' + d if (d<10) 
-      dms = d + '\u00B0'        # add º symbol
-    when :dm
-      min = (deg*60).to_fixed(dp)   # convert degrees to minutes & round
+      d = deg.round(dp)       # round degrees
+      ds = "0#{d}" if (d <100)    # pad with leading zeros
+      ds = "0#{ds}" if (d <10) 
+      dms = ds.concat("\u00B0")  # add º symbol
+    when :dm            
+      min = (deg*60).round(dp)   # convert degrees to minutes & round
+      d = d.to_i
       d = (min / 60).floor          # get component deg/min
-      m = (min % 60).to_fixed(dp)   # pad with trailing zeros
-      d = '0' + d if (d<100)        # pad with leading zeros
-      d = '0' + d if (d<10)
-      m = '0' + m if (m<10) 
-      dms = d + '\u00B0' + m + '\u2032'  # add º, ' symbols
+      m = (min % 60).round(dp)   # pad with trailing zeros
+      ds = d
+      ms = m
+      ds = "0#{d}" if (d<100)        # pad with leading zeros
+      ds = "0#{d}" if (d<10)
+      ms = "0#{m}" if (m<10)               
+      dms = ds.concat("\u00B0", ms, "\u2032") # add º, ' symbols
     when :dms
       sec = (deg * 3600).round   # convert degrees to seconds & round
       d = (sec / 3600).floor          # get component deg/min/sec
       m = ((sec / 60) % 60).floor
-      s = (sec % 60).to_fixed(dp)     # pad with trailing zeros
-      d = "0#{d}" if (d.to_i < 100)          # pad with leading zeros
-      d = "0#{d}" if (d.to_i < 10) 
-      m = "0#{m}" if (m.to_i < 10) 
-      s = "0#{s}" if (s.to_i < 10) 
-      dms = d.concat("\u00B0", m, "\u2032", s, "\u2033")  # add º, ', " symbols
-      # dms = "#{d}°#{m}'#{s}\""
+      s = (sec % 60).round(dp)     # pad with trailing zeros
+      ds = d
+      ms = m
+      ss = s
+      ds = "0#{d}" if (d < 100)          # pad with leading zeros
+      ds = "0#{ds}" if (d < 10) 
+      ms = "0#{m}" if (m < 10) 
+      ss = "0#{s}" if (s < 10) 
+      dms = ds.concat("\u00B0", ms, "\u2032", ss, "\u2033")  # add º, ', " symbols
     end
     return dms
   end
