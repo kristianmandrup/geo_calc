@@ -6,9 +6,9 @@ h2. Install
 
 @require 'geo_calc'@
 
-h3. Rails 3
+h3. Gemfile
 
-In Gemfile:
+Insert in your Gemfile:
 
 @gem 'geo_calc'@
 
@@ -16,15 +16,10 @@ From command line, run bundler
 
 @$ bundle@
 
-h2. Status (May 12, 2011)
-
-All specs pass. Stable
-
 h2. Quick start (Usage)
 
-Define the points on the globe:
-
-The GeoPoint initializer is very flexible with regards to the arguments it can use:
+First define the points on the globe you want to work with.
+The GeoPoint initializer is very flexible with regards to the arguments it can handle.
 
 <pre>
   # two arguments
@@ -48,11 +43,15 @@ The GeoPoint initializer is very flexible with regards to the arguments it can u
   p4 = GeoPoint.new {:latitude => 27.3, :longitude => "24 10 02 E"}  
 </pre>
 
-Calculate shortest distance in kms between points p1 and p2
+h3. Shortes distance
+
+Calculate *distance in kms between points p1 and p2*
 
 <pre>  
   dist = p1.distance_to(p2) # in km
 </pre>
+
+h3. Initial bearing (direction)
 
 Calculate the initial bearing (direction in degrees which p1 points at p2)
 
@@ -60,11 +59,15 @@ Calculate the initial bearing (direction in degrees which p1 points at p2)
   brng = p1.bearing_to(p2) # in degrees clockwise from north
 </pre>
 
+h3. Final bearing (direction)
+
 Calculate the final bearing (direction in degrees) between p1 -> p2)
 
 <pre>
   final_brng = p1.final_bearing_to(p2) # final bearing in degrees from north  
 </pre>
+
+h3. Midpoint
 
 Find the midpoint between points p1 and p2
   
@@ -72,11 +75,15 @@ Find the midpoint between points p1 and p2
   mid = p1.midpoint_to point(p2) # midpoint between p1 and p2
 </pre>
 
+h3. Destination point
+
 Find the destination point from walking a distance in a given bearing (direction in degrees from p1)
   
 <pre>
   dest = p1.destination_point bearing, dist # Bearing in degrees, Distance in km  
 </pre>
+
+h3. Intersection point
 
 Find the intersection point pcross between a path from p1 and a path from p2
   
@@ -84,34 +91,31 @@ Find the intersection point pcross between a path from p1 and a path from p2
   pcross = GeoPoint.intersection p1, brng1, p2, brng2 # intersection between two paths
 </pre>  
 
-Using _Rhumb lines_:
-
-Distance in kms
+h2. Rhumb lines
   
 <pre>
   p1.rhumb_distance_to(p2)
 </pre>  
-
-Bearing (direction in degrees)
   
 <pre>
   p1.bearing_to(p2)
 </pre>  
 
-Destination point
-
 <pre>
   p1.rhumb_destination_point(brng, dist)  
 </pre>    
 
-Utility methods
+h2. Utility methods
+
+These are some of the utility methods you can use on a GeoPoint object
   
 <pre>
+  p1 = GeoPoint.new 5.1, -7
   p1.lat          # latitude
-  p2.lon          # longitude
-  p3.to_arr       # array representation of [lat, lng]
-  p3.reverse_arr! # reverse to_arr to instead return [lng, lat]
-  p3.normal_arr!  # return to normal to_arr functionality: [lat, lng]
+  p1.lon          # longitude
+  p1.to_arr       # array representation of [lat, lng]
+  p1.reverse_arr! # reverse to_arr to instead return [lng, lat]
+  p1.normal_arr!  # return to normal to_arr functionality: [lat, lng]
   p1.to_s         # string representation
 </pre>  
 
@@ -119,23 +123,27 @@ h2. Core Extensions
 
 The library also extends core Ruby classes with geo related functions (see _core_ext_spec.rb_)
 
-Radians to degrees
+h3. Radians to degrees
 
 <pre>
   (6.28).to_deg # almost 360 deg  
 </pre>
 
-Degrees to radians
+h3. Degrees to radians
 
 <pre>
   (360).to_deg # about 6.28, or 2 * PI
 </pre>
 
-Convert DMS format (degrees-minutes-seconds) to degrees (Float)
+h3. DMS to degrees 
+
+Convert (degrees-minutes-seconds) to degrees (Float)
 
 <pre>
   "24 10 02 E".parse_dms(:dm, 2) # dms format and precision 
 </pre>
+
+h3. Degrees to DMS
 
 Convert degrees into to DMS format
 
@@ -147,7 +155,9 @@ And many more...
 
 h2. Javascript
 
-The libary also comes wih a javascript file with the same functionality. See _js/geo_calc.js_ in the _/lib_ folder
+The libary also comes wih a javascript file with the same functionality. 
+
+See _js/geo_calc.js_ in the _/lib_ folder
 
 h2. Contributing to geo_calc
  
