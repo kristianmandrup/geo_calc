@@ -27,7 +27,7 @@ module Geo
     return dms_str if is_numeric?(dms_str)
   
     # strip off any sign or compass dir'n & split out separate d/m/s
-    dms = dms_str.trim.gsub(/^-/,'').gsub(/[NSEW]$/i,'').split(/[^0-9.,]+/).trim
+    dms = dms_str.trim.gsub(/^-/,'').gsub(/[NSEW]$/i,'').split(/[^0-9.,]+/).map(&:trim).map(&:to_f)
     return nil if dms.empty?
   
     # and convert to decimal degrees...

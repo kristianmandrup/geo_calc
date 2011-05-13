@@ -41,37 +41,39 @@ module NumericGeoExt
   # @param   {Number} precision: Number of significant digits to appear in the returned string
   # @returns {String} A string representation of number which contains precision significant digits
   def to_precision precision
-    numb = self.abs  # can't take log of -ve number...
-    sign = self < 0 ? '-' : '';
+    self.round(precision).to_s
 
-    # can't take log of zero
-    if (numb == 0) 
-      n = '0.' 
-      while (precision -= 1) > 0
-        n += '0' 
-      end 
-      return n
-    end
-
-    scale = (Math.log(numb) * Math.log10e).ceil # no of digits before decimal
-    n = (numb * (precision - scale)**10).round.to_s
-    if (scale > 0)   # add trailing zeros & insert decimal as required
-      l = scale - n.length
-
-      while (l -= 1) > 0
-        n += '0' 
-      end
-
-      if scale < n.length 
-        n = n.slice(0,scale) + '.' + n.slice(scale)
-      else # prefix decimal and leading zeros if required
-        while (scale += 1) < 0
-          n = '0' + n 
-        end
-        n = '0.' + n
-      end 
-    end
-    sign + n
+    # numb = self.abs  # can't take log of -ve number...
+    # sign = self < 0 ? '-' : '';
+    # 
+    # # can't take log of zero
+    # if (numb == 0) 
+    #   n = '0.' 
+    #   while (precision -= 1) > 0
+    #     n += '0' 
+    #   end 
+    #   return n
+    # end
+    # 
+    # scale = (Math.log(numb) * Math.log10e).ceil # no of digits before decimal
+    # n = (numb * (precision - scale)**10).round.to_s
+    # if (scale > 0)   # add trailing zeros & insert decimal as required
+    #   l = scale - n.length
+    # 
+    #   while (l -= 1) > 0
+    #     n += '0' 
+    #   end
+    # 
+    #   if scale < n.length 
+    #     n = n.slice(0,scale) + '.' + n.slice(scale)
+    #   else # prefix decimal and leading zeros if required
+    #     while (scale += 1) < 0
+    #       n = '0' + n 
+    #     end
+    #     n = '0.' + n
+    #   end 
+    # end
+    # sign + n
   end
   alias_method :to_fixed, :to_precision
 
@@ -95,15 +97,25 @@ module NumericLatLngExt
   alias_method :to_lng, :to_lat
     
   def is_between? lower, upper
-    self > lower && self < upper
+    (lower..upper).cover? self
   end
 end
 
 class Array
   def to_lat_lng
-    raise "Array must contain at least two elements to be converted to latitude and longitude" if !size >= 2
-    [first.to_lat, self[1].to_lng]
+    raise "Array must contain at least two elements to be converted to latitude and longitude" if !(size >= 2)
+    [to_lat, to_lng]
   end 
+
+  def to_lat
+    raise "Array must contain at least one element to return the latitude" if empty?
+    first.to_lat
+  end
+
+  def to_lng
+    raise "Array must contain at least two elements to return the longitude" if !self[1]
+    self[1].to_lng
+  end
   
   def trim
     join.trim
@@ -122,18 +134,18 @@ end
 
 class Hash
   def to_lat_lng
-    [self.to_lat, self.to_lng]
+    [to_lat, to_lng]
   end
   
   def to_lat
-    v = Symbol.lat_symbols.select { self[key].is_a? Numeric }
-    return self[v.first] if !v.empty?
+    v = Symbol.lat_symbols.select {|key| self[key] }
+    return self[v.first].to_lat if !v.empty?
     raise "Hash must contain either of the keys: [:lat, :latitude] to be converted to a latitude"
   end
 
   def to_lng
-    v = Symbol.lng_symbols.select { self[key].is_a? Numeric }
-    return self[v.first] if !v.empty?
+    v = Symbol.lng_symbols.select {|key| self[key] }
+    return self[v.first].to_lng if !v.empty?
     raise "Hash must contain either of the keys: [:lon, :long, :lng, :longitude] to be converted to a longitude"
   end
 end  
@@ -156,10 +168,12 @@ class String
   end
   
   def to_lat
+    raise "An empty String has no latitude" if empty?
     parse_dms(self).to_f.to_lat
   end
 
   def to_lng
+    raise "An empty String has no latitude" if empty?
     parse_dms(self).to_f.to_lat
   end
 end
