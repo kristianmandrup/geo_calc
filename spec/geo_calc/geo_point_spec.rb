@@ -159,6 +159,48 @@ describe GeoPoint do
   #     @p1.to_s(:dm, 2).should match /50.+5/
   #   end
   # end
+
+  describe '#lat' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+  
+    it 'should return latitude' do
+      @p1.lat.should == 50
+    end
+
+    describe '#latitude (alias)' do
+      it 'should return latitude' do
+        @p1.latitude.should == 50
+      end
+    end
+  end
+
+  describe '#[]' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+  
+    it 'index of 0 should return latitude' do
+      @p1[0].should == 50
+    end
+
+    it 'index of 1 should return longitude' do
+      @p1[1].should == 5
+    end
+
+    it 'index of 2 should raise error' do
+      lambda {@p1[2]}.should raise_error
+    end
+
+    it ':lat should return latitude' do
+      @p1[:lat].should == 50
+    end
+
+    it ':long should return longitude' do
+      @p1[:long].should == 5
+    end
+  end
   
   describe '#to_arr' do
     before :each do

@@ -49,6 +49,18 @@ class GeoPoint
     end
   end
 
+  def [] key
+    case key
+    when Fixnum   
+      raise ArgumentError, "Index must be 0 or 1" if !(0..1).cover?(key)
+      to_arr[key] 
+    when String, Symbol
+      send(key) if respond_to? key
+    else
+      raise ArgumentError, "Key must be a Fixnum (index) or a method name"  
+    end    
+  end
+
   def to_arr
     a = [lat, lng]
     reverse_arr? ? a.reverse : a
