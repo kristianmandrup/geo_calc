@@ -51,7 +51,7 @@ class GeoPoint
 
   def to_arr
     a = [lat, lng]
-    a.reverse if reverse_arr?
+    reverse_arr? ? a.reverse : a
   end
 
   def reverse_arr?

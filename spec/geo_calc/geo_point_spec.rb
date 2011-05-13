@@ -110,51 +110,40 @@ describe GeoPoint do
       end     
     end 
     
-  #   describe 'with 2 arguments' do
-  #     describe '2 Fixed numbers (Fixnum)' do
-  #       it 'should create a GeoPoint' do
-  #         p1 = GeoPoint.new 50, 5
-  #         p1.should be_a(GeoPoint)
-  #         p1.lat.should == 50
-  #         p1.lon.should == 5
-  #         p1.unit.should == :degrees        
-  #         p1.radius.should == 6371
-  #       end
-  #     end
-  # 
-  #     describe '2 Float numbers' do
-  #       it 'should create a GeoPoint' do
-  #         p1 = GeoPoint.new 50.1, 5.0
-  #         p1.should be_a(GeoPoint)
-  #         p1.lat.should == 50.1
-  #         p1.lon.should == 5.1
-  #         p1.unit.should == :degrees
-  #         p1.radius.should == 6371
-  #       end
-  #     end    
-  #     
-  #     describe '2 Strings: "58 38 38N", "003 04 12W"' do
-  #       it 'should create a GeoPoint' do
-  #         p1 = GeoPoint.new "58 38 38N", "003 04 12W"
-  #         p1.should be_a(GeoPoint)
-  #         p1.lat.should be_within(0.5).of(58.38)
-  #         p1.lon.should be_within(0.5).of(3)
-  #         p1.unit.should == :degrees
-  #         p1.radius.should == 6371
-  #       end
-  #     end
-  # 
-  #     describe '2 Arrays: ["58 38 38N"], ["003 04 12W"]' do
-  #       it 'should create a GeoPoint' do
-  #         p1 = GeoPoint.new ["58 38 38N"], ["003 04 12W"]
-  #         p1.should be_a(GeoPoint)
-  #         p1.lat.should be_within(0.5).of(58.38)
-  #         p1.lon.should be_within(0.5).of(3)
-  #         p1.unit.should == :degrees
-  #         p1.radius.should == 6371
-  #       end
-  #     end
-  #   end
+    describe 'with 2 arguments' do
+      describe '2 Fixed numbers (Fixnum)' do
+        it 'should create a GeoPoint' do
+          p1 = GeoPoint.new 50, 5
+          p1.should be_a(GeoPoint)
+          p1.lat.should == 50
+          p1.lon.should == 5
+          p1.unit.should == :degrees        
+          p1.radius.should == 6371
+        end
+      end
+  
+      describe '2 Float numbers' do
+        it 'should create a GeoPoint' do
+          p1 = GeoPoint.new 50.1, 5.0
+          p1.should be_a(GeoPoint)
+          p1.lat.should == 50.1
+          p1.lon.should == 5.0
+          p1.unit.should == :degrees
+          p1.radius.should == 6371
+        end
+      end    
+      
+      describe '2 Strings: "58 38 38N", "003 04 12W"' do
+        it 'should create a GeoPoint' do
+          p1 = GeoPoint.new "58 38 38N", "003 04 12W"
+          p1.should be_a(GeoPoint)
+          p1.lat.should be_within(0.5).of(58.38)
+          p1.lon.should be_within(0.5).of(356.5)
+          p1.unit.should == :degrees
+          p1.radius.should == 6371
+        end
+      end  
+    end
   end # initializer  
 
   # describe '#to_s' do
@@ -171,27 +160,27 @@ describe GeoPoint do
   #   end
   # end
   
-  # describe '#to_arr' do
-  #   before :each do
-  #     @p1 = GeoPoint.new 50, 5
-  #   end
-  # 
-  #   it 'should return GeoPoint as an array depending on state of reverse_arr' do
-  #     @p1.to_arr.should == [50, 5]
-  #   end
-  # 
-  #   describe '#reverse_arr!' do    
-  #     it 'should reverse the array returned by #to_arr to [lng, lat]' do
-  #       @p1.reverse_arr!
-  #       @p1.to_arr.should == [5, 50]
-  #     end
-  #   end
-  # 
-  #   describe '#reverse_arr!' do    
-  #     it 'should turn effect of #to_arr back to normal [lat, lng]' do
-  #       @p1.normal_arr!
-  #       @p1.to_arr.should == [50, 5]      
-  #     end
-  #   end
-  # end
+  describe '#to_arr' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+  
+    it 'should return GeoPoint as an array depending on state of reverse_arr' do
+      @p1.to_arr.should == [50, 5]
+    end
+  
+    describe '#reverse_arr!' do    
+      it 'should reverse the array returned by #to_arr to [lng, lat]' do
+        @p1.reverse_arr!
+        @p1.to_arr.should == [5, 50]
+      end
+    end
+      
+    describe '#reverse_arr!' do    
+      it 'should turn effect of #to_arr back to normal [lat, lng]' do
+        @p1.normal_arr!
+        @p1.to_arr.should == [50, 5]      
+      end
+    end
+  end
 end
