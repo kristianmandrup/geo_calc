@@ -1,10 +1,10 @@
 h1. Geo calculations
 
-Geo Calculation library. Useful functions to add to your geo arsenal, fx when designing your own Geo library (gem). 
+Geo Calculation library. Useful functions to add to your geo arsenal, fx when designing your own Geo library. 
 
 h2. Install
 
-require 'geo_calc'
+@require 'geo_calc'@
 
 h3. Rails 3
 
@@ -18,36 +18,134 @@ From command line, run bundler
 
 h2. Status (May 12, 2011)
 
-Not yet tested (POC)
+All specs pass. Stable
 
 h2. Quick start (Usage)
 
+Define the points on the globe:
+
+The GeoPoint initializer is very flexible with regards to the arguments it can use:
+
 <pre>
+  # two arguments
   p1 = GeoPoint.new 51.5136, -0.0983
-  p2 = GeoPoint.new(51.4778, -0.0015
-  
-  dist = p1.distance_to(p2) # in km                                             
+  p2 = GeoPoint.new "14 11 01 N", "-0.0983"
+  p3 = GeoPoint.new 51.5136, "24 10 02 E"
 
-  brng = p1.bearing_to(p2) # in degrees clockwise from north
+  # a String
+  p1 = GeoPoint.new "51.5136, -0.0983"
+  p1 = GeoPoint.new "51.5136, 24 10 02 E"
+  p3 = GeoPoint.new "51.4778, -0.0015"  
+  p1 = GeoPoint.new "51 12 03 N, 24 10 02 E"
 
-  final_brng = p1.final_bearing_to(p2) # final bearing in degrees from north  
+  # an Array
+  p2 = GeoPoint.new [51.5136, -0.0983]
+  p2 = GeoPoint.new [51.5136, "24 10 02 E"]
+  p2 = GeoPoint.new [51.5136, {:lon => 27.3}]
 
-  mid = p1.midpoint_to point(p2) # midpoint between p1 and p2
-
-  dest = p1.destination_point bearing, dist # Bearing in degrees, Distance in km
-  
-  GeoPoint.intersection p1, brng1, p2, brng2 # intersection between two paths
-  
-  p1.rhumb_distance_to(p2)
-  
-  p1.bearing_to(p2)  
-  
-  p1.rhumb_destination_point(brng, dist)
-  
-  p1.lat # latitude
-  p2.lon # longitude
-  p1.to_s # string rep
+  # a Hash
+  p4 = GeoPoint.new {:lat => 27.3, :lng => "24 10 02 E"}
+  p4 = GeoPoint.new {:latitude => 27.3, :longitude => "24 10 02 E"}  
 </pre>
+
+Calculate shortest distance in kms between points p1 and p2
+
+<pre>  
+  dist = p1.distance_to(p2) # in km
+</pre>
+
+Calculate the initial bearing (direction in degrees which p1 points at p2)
+
+<pre>
+  brng = p1.bearing_to(p2) # in degrees clockwise from north
+</pre>
+
+Calculate the final bearing (direction in degrees) between p1 -> p2)
+
+<pre>
+  final_brng = p1.final_bearing_to(p2) # final bearing in degrees from north  
+</pre>
+
+Find the midpoint between points p1 and p2
+  
+<pre>
+  mid = p1.midpoint_to point(p2) # midpoint between p1 and p2
+</pre>
+
+Find the destination point from walking a distance in a given bearing (direction in degrees from p1)
+  
+<pre>
+  dest = p1.destination_point bearing, dist # Bearing in degrees, Distance in km  
+</pre>
+
+Find the intersection point pcross between a path from p1 and a path from p2
+  
+<pre>
+  pcross = GeoPoint.intersection p1, brng1, p2, brng2 # intersection between two paths
+</pre>  
+
+Using _Rhumb lines_:
+
+Distance in kms
+  
+<pre>
+  p1.rhumb_distance_to(p2)
+</pre>  
+
+Bearing (direction in degrees)
+  
+<pre>
+  p1.bearing_to(p2)
+</pre>  
+
+Destination point
+
+<pre>
+  p1.rhumb_destination_point(brng, dist)  
+</pre>    
+
+Utility methods
+  
+<pre>
+  p1.lat          # latitude
+  p2.lon          # longitude
+  p3.to_arr       # array representation of [lat, lng]
+  p3.reverse_arr! # reverse to_arr to instead return [lng, lat]
+  p3.normal_arr!  # return to normal to_arr functionality: [lat, lng]
+  p1.to_s         # string representation
+</pre>  
+
+h2. Core Extensions
+
+The library also extends core Ruby classes with geo related functions (see _core_ext_spec.rb_)
+
+Radians to degrees
+
+<pre>
+  (6.28).to_deg # almost 360 deg  
+</pre>
+
+Degrees to radians
+
+<pre>
+  (360).to_deg # about 6.28, or 2 * PI
+</pre>
+
+Convert DMS format (degrees-minutes-seconds) to degrees (Float)
+
+<pre>
+  "24 10 02 E".parse_dms(:dm, 2) # dms format and precision 
+</pre>
+
+Convert degrees into to DMS format
+
+<pre>
+  53.2.to_dms # can also take dms format and precision args
+</pre>
+
+And many more...
+
+h2. Javascript
 
 The libary also comes wih a javascript file with the same functionality. See _js/geo_calc.js_ in the _/lib_ folder
 
