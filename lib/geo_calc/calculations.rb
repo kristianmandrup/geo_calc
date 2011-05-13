@@ -146,6 +146,7 @@ module GeoCalc
 
     brng13 = brng1.to_rad
     brng23 = brng2.to_rad
+        
     dlat = lat2-lat1
     dlon = lon2-lon1;
 
@@ -213,6 +214,7 @@ module GeoCalc
     rescue 
       Math.cos(lat1) # E-W line gives dPhi=0
     end
+        
     # if dlon over 180° take shorter rhumb across 180° meridian:
     dlon = 2*Math::PI - dlon if (dlon > Math::PI)
 
@@ -267,13 +269,13 @@ module GeoCalc
       Math.cos(lat1) # E-W line gives dPhi=0
     end
 
-    var dlon = d*Math.sin(brng)/q
+    dlon = d*Math.sin(brng)/q
     # check for some daft bugger going past the pole
 
     if lat2.abs > Math::PI/2
       lat2 = lat2>0 ? Math::PI-lat2 : -(Math::PI-lat2)
     end
-    lon2 = (lon1+dlon+3*Math::PI)%(2*Math::PI) - Math::PI
+    lon2 = (lon1+dlon+3*Math::PI) % (2*Math::PI) - Math::PI
 
     GeoPoint.new lat2.to_deg, lon2.to_deg
   end

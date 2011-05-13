@@ -94,26 +94,24 @@ describe GeoCalc do
     # Intersection point:   50°54′06″N, 004°29′39″E
     describe '#intersection' do      
       it 'should return the intersection between p1 and p2 as (50 54 06 N, 004 29 39 E)' do
-        GeoCalc.intersection(@p1, @brng1, @p2, @brng1).to_dms.should match /50.+54.+06.+N, 004.+29.+39.+E/
+        GeoCalc.intersection(@p1, @brng1, @p2, @brng2).to_dms.should match /50.+54.+06.+N, 004.+29.+39.+E/
       end
     end
   end
   
   # Rhumb lines:
-  # Point 1:  (50 21 50N, 004 09 25W)
-  # Point 2:  (42 21 04N, 071 02 27W)
-  context 'Points: (51.885 N, 0.235 E) Brng 108.63 (49.008 N, 2.549 E) Brng 32.72' do
+  # Point 1:  (50 21 50 N, 004 09 25 W)
+  # Point 2:  (42 21 04 N, 071 02 27 W)
+  context 'Points: (50 21 50N, 004 09 25W ) (42 21 04N, 071 02 27 W)' do
     before do
-      @p1 = GeoPoint.new "51.885 N, 0.235 E"
-      @brng1 = "108.63"
-      @p2 = GeoPoint.new "49.008 N, 2.549 E"
-      @brng2 = "32.72"
+      @p1 = GeoPoint.new "50 21 50N, 004 09 25 W"
+      @p2 = GeoPoint.new "42 21 04N, 071 02 27 W"
     end
     
     # Distance:   5196 km
     describe '#rhumb_distance_to' do
       it 'should return the distance from p1 to p2 as 5196 km' do
-        @p1.rhumb_distance_to(@p2).should == 5196
+        @p1.rhumb_distance_to(@p2).should be_within(1).of(5196)
       end
     end
   
@@ -124,53 +122,53 @@ describe GeoCalc do
       end
     end
   end
-  # 
-  # # Start Point:  (51 07 32N, 001 20 17E)
-  # # Bearing:      116°38′10
-  # # Distance:     40.23 km
-  # context 'Start Point: (51 07 32N, 001 20 17E), Bearing: 116°38′10, Distance: 40.23 km' do
-  #   before do
-  #     @p = GeoPoint.new "51 07 32N, 001 20 17E"
-  #     @brng = "116°38′10" 
-  #     @dist = 40.23
-  #   end
-  #       
-  #   # Destination point:  50°57′48″N, 001°51′09″E
-  #   describe '#rhumb_destination_point' do      
-  #     it 'should return the destination_point as (50°57′48″N, 001°51′09″E)' do
-  #       @p2 = @p1.rhumb_destination_point(@brng, @dist)
-  #       @p2.to_dms.should == "50°57′48″N, 001°51′09″E"
-  #     end
-  #   end
-  # end
-  # 
-  # # Conversion
-  # # Point: (52°12′17.0″N, 000°08′26.0″E)
-  # # 52.20472 numeric deg (lat)
-  # # 0.14056 numeric deg (lon)
-  # context 'Point: (52°12′17.0″N, 000°08′26.0″E)' do
-  #   before do
-  #     @p = GeoPoint.new "52°12′17.0″N", "000°08′26.0″E"
-  #     @lat = 52.20472
-  #     @lon = 0.14056
-  #   end
-  # 
-  #   # 1° ≈ 111 km (110.57 eq’l — 111.70 polar)
-  #   # 1′ ≈ 1.85 km (= 1 nm)   0.01° ≈ 1.11 km
-  #   # 1″ ≈ 30.9 m   0.0001° ≈ 11.1 m
-  # 
-  #   # Convert numeric degrees to deg/min/sec longitude (suffixed with E/W)
-  #   describe '#to_lon' do      
-  #     it 'should Convert numeric degrees to deg/min/sec longitude (suffixed with E/W)' do
-  #       @lon.to_lon.should == "000°08′26.0″E"
-  #     end
-  #   end
-  #   
-  #   # Convert numeric degrees to deg/min/sec latitude (suffixed with N/S)
-  #   describe '#to_lat' do      
-  #     it 'should convert numeric degrees to deg/min/sec latitude (suffixed with N/S)' do
-  #       @lat.to_lat.should == "52°12′17.0″N"
-  #     end
-  #   end
-  # end
+  
+  # Start Point:  (51 07 32N, 001 20 17E)
+  # Bearing:      116°38′10
+  # Distance:     40.23 km
+  context 'Start Point: (51 07 32N, 001 20 17E), Bearing: 116 38 10, Distance: 40.23 km' do
+    before do
+      @p1 = GeoPoint.new "51 07 32N, 001 20 17E"
+      @brng = "116 38 10" 
+      @dist = 40.23
+    end
+        
+    # Destination point:  50°57′48″N, 001°51′09″E
+    describe '#rhumb_destination_point' do      
+      it 'should return the destination_point as (50 57 48 N, 001 51 09 E)' do
+        @p2 = @p1.rhumb_destination_point(@brng, @dist)
+        @p2.to_dms.should match /50.+57.+48.+N, 001.+51.+09.+E/
+      end
+    end
+  end
+  
+  # Conversion
+  # Point: (52°12′17.0″N, 000°08′26.0″E)
+  # 52.20472 numeric deg (lat)
+  # 0.14056 numeric deg (lon)
+  context 'Point: (52 12 17.0 N, 000 08 26.0 E)' do
+    before do
+      @p = GeoPoint.new "52 12 17.0 N", "000 08 26.0 E"
+      @lat = 52.20472
+      @lon = 0.14056
+    end
+  
+    # 1° ≈ 111 km (110.57 eq’l — 111.70 polar)
+    # 1′ ≈ 1.85 km (= 1 nm)   0.01° ≈ 1.11 km
+    # 1″ ≈ 30.9 m   0.0001° ≈ 11.1 m
+  
+    # Convert numeric degrees to deg/min/sec longitude (suffixed with E/W)
+    describe '#to_lon' do      
+      it 'should Convert numeric degrees to deg/min/sec longitude (suffixed with E/W)' do
+        @lon.to_lon_dms.should match /000.+08.+26.+E/
+      end
+    end
+    
+    # Convert numeric degrees to deg/min/sec latitude (suffixed with N/S)
+    describe '#to_lat' do      
+      it 'should convert numeric degrees to deg/min/sec latitude (suffixed with N/S)' do
+        @lat.to_lat_dms.should match /52.+12.+17.+N/
+      end
+    end
+  end 
 end
