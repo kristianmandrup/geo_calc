@@ -18,7 +18,7 @@ module GeoCalc
   #
   # Returns - Numeric distance in km between this point and destination point
   
-  def distance_to point, precision
+  def distance_to point, precision = 4
     # default 4 sig figs reflects typical 0.3% accuracy of spherical model
     precision ||= 4
 
@@ -34,7 +34,7 @@ module GeoCalc
     a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon/2) * Math.sin(dlon/2)
     c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
     d = radius * c
-    d.to_precision_fixed(precision)
+    d.round(precision)
   end
   
   
@@ -71,7 +71,7 @@ module GeoCalc
     lat2 = lat.to_rad
     dlon = (lon - point.lon).to_rad
 
-    y = Math.sin(dLon) * Math.cos(lat2)
+    y = Math.sin(dlon) * Math.cos(lat2)
     x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dlon)
     bearing = Math.atan2(y, x)
 
@@ -95,7 +95,7 @@ module GeoCalc
     bx = Math.cos(lat2) * Math.cos(dlon)
     by = Math.cos(lat2) * Math.sin(dlon)
 
-    lat3 = Math.atan2(Math.sin(lat1)+Math.sin(lat2), Math.sqrt( (Math.cos(lat1)+Bx)*(Math.cos(lat1)+Bx) + By*By) )
+    lat3 = Math.atan2(Math.sin(lat1)+Math.sin(lat2), Math.sqrt( (Math.cos(lat1)+bx)*(Math.cos(lat1)+bx) + by*by) )
 
     lon3 = lon1 + Math.atan2(by, Math.cos(lat1) + bx)
 
@@ -112,18 +112,18 @@ module GeoCalc
   # - Numeric dist: Distance in km
   # Returns GeoPoint: Destination point
   
-  def destination_point bearing, dist
+  def destination_point brng, dist
     dist = dist / radius  # convert dist to angular distance in radians
-    bearing = bearing.to_rad 
-    lat1 = this.lat.to_rad
-    lon1 = this.lon.to_rad
+    brng = brng.to_rad 
+    lat1 = lat.to_rad
+    lon1 = lon.to_rad
 
-    lat2 = Math.asin( Math.sin(lat1)*Math.cos(dist) + Math.cos(lat1)*Math.sin(dist)*Math.cos(bearing) )
-    var lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(dist)*Math.cos(lat1), Math.cos(dist)-Math.sin(lat1)*Math.sin(lat2))
+    lat2 = Math.asin( Math.sin(lat1) * Math.cos(dist) + Math.cos(lat1) * Math.sin(dist) * Math.cos(brng) )
+    lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(dist) * Math.cos(lat1), Math.cos(dist) - Math.sin(lat1) * Math.sin(lat2))
 
-    lon2 = (lon2+3*Math::PI)%(2*Math::PI) - Math::PI  # normalise to -180...+180
+    lon2 = (lon2 + 3*Math::PI) % (2*Math::PI) - Math::PI  # normalise to -180...+180   
 
-    GeoPoint.new lat2.toDeg(), lon2.toDeg()
+    GeoPoint.new lat2.to_deg, lon2.to_deg
   end
 
   
@@ -185,8 +185,8 @@ module GeoCalc
 
     dlon13 = Math.atan2( Math.sin(brng13)*Math.sin(dist13)*Math.cos(lat1), Math.cos(dist13)-Math.sin(lat1)*Math.sin(lat3) )
 
-    lon3 = lon1+dlon13;
-    lon3 = (lon3+Math::PI) % (2*Math::PI) - Math::PI  # normalise to -180..180º
+    lon3 = lon1 + dlon13;
+    lon3 = (lon3 + Math::PI) % (2*Math::PI) - Math::PI  # normalise to -180..180º
 
     GeoPoint.new lat3.to_deg, lon3.to_deg
   end
@@ -204,12 +204,12 @@ module GeoCalc
     lat2 = point.lat.to_rad
 
     dlat = (point.lat-lat).to_rad
-    dlon = Math.abs(point.lon-lon).to_rad
+    dlon = (point.lon-lon).abs.to_rad
 
-    var dphi = Math.log(Math.tan(lat2/2+Math::PI/4)/Math.tan(lat1/2+Math::PI/4))
+    dphi = Math.log(Math.tan(lat2/2 + Math::PI/4) / Math.tan(lat1/2 + Math::PI/4))
 
     q = begin
-      dLat/dPhi
+      dlat / dphi
     rescue 
       Math.cos(lat1) # E-W line gives dPhi=0
     end
@@ -218,7 +218,7 @@ module GeoCalc
 
     dist = Math.sqrt(dlat*dlat + q*q*dlon*dlon) * radius; 
 
-    dist.to_precision_fixed(4)  # 4 sig figures reflects typical 0.3% accuracy of spherical model
+    dist.round(4)  # 4 sig figures reflects typical 0.3% accuracy of spherical model
   end
   
   
@@ -322,7 +322,6 @@ module GeoCalc
   
     return '-,-' if !lat || !lon
   
-    puts "lat: #{lat}, #{format}, #{dp}"
     _lat = Geo.to_lat lat, format, dp
     _lon = Geo.to_lon lon, format, dp
   

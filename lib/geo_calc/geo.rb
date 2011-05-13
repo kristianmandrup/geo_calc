@@ -107,7 +107,7 @@ module Geo
       d = (sec / 3600).floor          # get component deg/min/sec
       m = ((sec / 60) % 60).floor
       s = (sec % 60).round(dp)     # pad with trailing zeros
-      ds = 
+      ds = d
       ms = m
       ss = s
       ds = "0#{d}" if (d < 100)          # pad with leading zeros
@@ -141,6 +141,7 @@ module Geo
   # @returns {String} Deg/min/seconds
 
   def to_lon deg, format = :dms, dp = 0
+    deg = (360 - deg) * -1 if deg % 360 > 180
     lon = to_dms deg, format, dp
     lon == '' ? '' : lon + (deg<0 ? 'W' : 'E')
   end
@@ -164,6 +165,6 @@ module Geo
   include NumericCheckExt
 end
 
-class String
-  include ::Geo
-end
+# class String
+#   include ::Geo
+# end

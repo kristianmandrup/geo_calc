@@ -10,10 +10,22 @@ module NumericCheckExt
   end  
 end
 
-module NumericGeoExt
+module NumericGeoExt 
+  def to_dms format = :dms, dp = nil
+    Geo.to_dms self, format, dp
+  end
+
+  def to_lat_dms format = :dms, dp = nil
+    Geo.to_lat self, format, dp
+  end
+
+  def to_lon_dms format = :dms, dp = nil
+    Geo.to_lon self, format, dp
+  end
+  
   # Converts numeric degrees to radians
   def to_rad
-      self * Math::PI / 180
+    self * Math::PI / 180
   end
   alias_method :to_radians, :to_rad
   alias_method :as_rad,     :to_rad
@@ -159,6 +171,14 @@ class String
     end
   end
 
+  def parse_dms
+    Geo.parse_dms self
+  end
+
+  def to_rad
+    parse_dms.to_rad
+  end
+
   def trim
     strip
   end
@@ -173,12 +193,12 @@ class String
   
   def to_lat
     raise "An empty String has no latitude" if empty?
-    parse_dms(geo_clean).to_f.to_lat
+    geo_clean.parse_dms.to_f.to_lat
   end
 
   def to_lng
     raise "An empty String has no latitude" if empty?
-    parse_dms(geo_clean).to_f.to_lng
+    geo_clean.parse_dms.to_f.to_lng
   end
 end
 

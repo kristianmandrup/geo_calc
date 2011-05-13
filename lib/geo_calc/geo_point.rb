@@ -61,6 +61,8 @@ class GeoPoint
     end    
   end
 
+  alias_method :to_dms, :to_s
+
   def to_arr
     a = [lat, lng]
     reverse_arr? ? a.reverse : a

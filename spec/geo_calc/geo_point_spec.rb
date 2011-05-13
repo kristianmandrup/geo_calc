@@ -146,19 +146,19 @@ describe GeoPoint do
     end
   end # initializer  
 
-  # describe '#to_s' do
-  #   before :each do
-  #     @p1 = GeoPoint.new 50.1, 5
-  #   end
-  # 
-  #   it 'should return GeoPoint as a dms formatted String' do
-  #     @p1.to_s.should match /50.+5/
-  #   end
-  # 
-  #   it 'should return GeoPoint as a dms formatted String' do
-  #     @p1.to_s(:dm, 2).should match /50.+5/
-  #   end
-  # end
+  describe '#to_s' do
+    before :each do
+      @p1 = GeoPoint.new 50.1, 5
+    end
+  
+    it 'should return GeoPoint as a dms formatted String' do
+      @p1.to_s.should match /50.+5/
+    end
+  
+    it 'should return GeoPoint as a dms formatted String' do
+      @p1.to_s(:dm, 2).should match /50.+5/
+    end
+  end
 
   describe '#lat' do
     before :each do
