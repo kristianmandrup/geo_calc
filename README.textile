@@ -22,6 +22,11 @@ First define the points on the globe you want to work with.
 The GeoPoint initializer is very flexible with regards to the arguments it can handle.
 
 <pre>
+  # factory method on core ruby classes
+  "51 12 03 N, 24 10 02 E".geo_point
+  [51.5136, -0.0983].geo_point
+  {:latitude => 27.3, :longitude => "24 10 02 E"}.geo_point
+
   # two arguments
   p1 = GeoPoint.new 51.5136, -0.0983
   p2 = GeoPoint.new "14 11 01 N", "-0.0983"
