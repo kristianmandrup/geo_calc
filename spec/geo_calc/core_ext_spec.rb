@@ -138,7 +138,22 @@ describe GeoPoint do
             @arr = [4, "27.2"]            
             @arr.to_lng.should == 27.2
           end
-        end      
+        end   
+
+        describe '#to_lat_lng' do              
+          it 'should return Array with lat, lng' do
+            @arr = ["3", {:lng => "2"}]
+            @arr.to_lat_lng.should == [3, 2]
+          end
+        end 
+        
+        describe '#geo_point' do              
+          it 'should return a GeoPoint' do
+            @p = [3, 2].geo_point
+            @p.should be_a(GeoPoint)
+            @p.to_lat_lng.should == [3, 2]
+          end
+        end                            
       end # Array
 
       describe 'Hash extension' do
@@ -171,7 +186,15 @@ describe GeoPoint do
             @hash = {:lng => 2, :lat => "3"}
             @hash.to_lat_lng.should == [3, 2]
           end
-        end
+        end 
+        
+        describe '#geo_point' do              
+          it 'should return a GeoPoint' do
+            @p = {:lng => 2, :lat => "3"}.geo_point
+            @p.should be_a(GeoPoint)            
+            @p.to_lat_lng.should == [3, 2]
+          end
+        end         
       end # Hash 
       
       describe 'String extension' do
@@ -235,6 +258,14 @@ describe GeoPoint do
             lambda { @str.to_lat_lng}.should raise_error
           end
         end 
+        
+        describe '#geo_point' do              
+          it 'should return a GeoPoint' do
+            @p = "3, 2".geo_point
+            @p.should be_a(GeoPoint)            
+            @p.to_lat_lng.should == [3, 2]
+          end
+        end                 
       end # String      
     end
   end

@@ -114,6 +114,10 @@ module NumericLatLngExt
 end
 
 class Array
+  def geo_point
+    GeoPoint.new to_lat_lng
+  end  
+  
   def to_lat_lng
     raise "Array must contain at least two elements to be converted to latitude and longitude" if !(size >= 2)
     [to_lat, to_lng]
@@ -159,6 +163,10 @@ class Hash
     v = Symbol.lng_symbols.select {|key| self[key] }
     return self[v.first].to_lng if !v.empty?
     raise "Hash must contain either of the keys: [:lon, :long, :lng, :longitude] to be converted to a longitude"
+  end  
+  
+  def geo_point
+    GeoPoint.new to_lat_lng
   end
 end  
 
@@ -185,6 +193,10 @@ class String
 
   def geo_clean
     self.gsub(/^\(/, '').gsub(/\)$/, '').trim
+  end
+
+  def geo_point
+    GeoPoint.new to_lat_lng
   end
     
   def to_lat_lng  
