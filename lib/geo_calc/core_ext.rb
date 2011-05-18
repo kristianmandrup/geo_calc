@@ -10,6 +10,39 @@ module NumericCheckExt
   end  
 end
 
+module GeoUnits
+  module Converter
+    # Converts numeric degrees to radians
+    def to_rad degrees
+      degrees * Math::PI / 180
+    end
+    alias_method :to_radians, :to_rad
+    alias_method :as_rad,     :to_rad
+    alias_method :as_radians, :to_rad
+    alias_method :in_rad,     :to_rad
+    alias_method :in_radians, :to_rad
+
+
+    # Converts radians to numeric (signed) degrees
+    # latitude (north to south) from equator +90 up then -90 down (equator again) = 180 then 180 for south = 360 total 
+    # longitude (west to east)  east +180, west -180 = 360 total
+    def to_deg radians
+      radians * 180 / Math::PI
+    end
+
+    alias_method :to_degrees, :to_deg
+    alias_method :as_deg,     :to_deg
+    alias_method :as_degrees, :to_deg
+    alias_method :in_deg,     :to_deg
+    alias_method :in_degrees, :to_deg
+  end 
+  
+  def normalize_deg degrees, shift = 0
+    (degrees + shift) % 360 
+  end
+  alias_method :normalize_degrees, :normalize_deg  
+end
+
 module NumericGeoExt 
   def to_dms format = :dms, dp = nil
     Geo.to_dms self, format, dp
