@@ -45,8 +45,8 @@ class GeoPoint
     @lat = value.to_lat
   end
 
-  def lon= value 
-    @lon = lon.to_lng
+  def lon= value
+    @lon = value.to_lng
   end
 
   (Symbol.lng_symbols - [:lon]).each do |sym|
@@ -55,7 +55,7 @@ class GeoPoint
       alias_method :#{sym}=, :lon=
     }
   end    
-  alias_method :to_lat, :lat
+  alias_method :to_lng, :lng
 
   (Symbol.lat_symbols - [:lat]).each do |sym|
     class_eval %{
@@ -63,7 +63,7 @@ class GeoPoint
       alias_method :#{sym}=, :lat=
     }
   end
-  alias_method :to_lng, :lng
+  alias_method :to_lat, :lat
 
   def [] key
     case key
