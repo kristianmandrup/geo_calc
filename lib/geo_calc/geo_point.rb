@@ -21,21 +21,9 @@ class GeoPoint
   # - Numeric lon: longitude in numeric degrees
   # - Numeric [rad=6371]: radius of earth if different value is required from standard 6,371km
 
-  attr_reader :lat, :lon, :unit, :radius
+  attr_reader   :lat, :lon
+  attr_accessor :radius
   
-  (Symbol.lng_symbols - [:lon]).each do |sym|
-    class_eval %{
-      alias_method :#{sym}, :lon
-    }
-  end    
-
-  (Symbol.lat_symbols - [:lat]).each do |sym|
-    class_eval %{
-      alias_method :#{sym}, :lat
-    }
-  end    
-
-
   def initialize *args
     rad = args.delete(args.size) if is_numeric?(args.last) && args.last.is_between?(6350, 6380)
     rad ||= 6371 # default
@@ -47,6 +35,32 @@ class GeoPoint
     else
       raise "GeoPoint must be initialized with either one or to arguments defining the (latitude, longitude) coordinate on the map"
     end
+  end
+
+  def unit
+    :degrees
+  end
+
+  def lat= value 
+    @lat = value.to_lat
+  end
+
+  def lon= value 
+    @lon = lon.to_lng
+  end
+
+  (Symbol.lng_symbols - [:lon]).each do |sym|
+    class_eval %{
+      alias_method :#{sym}, :lon
+      alias_method :#{sym}=, :lon=
+    }
+  end    
+
+  (Symbol.lat_symbols - [:lat]).each do |sym|
+    class_eval %{
+      alias_method :#{sym}, :lat
+      alias_method :#{sym}=, :lat=
+    }
   end
 
   def [] key
@@ -96,8 +110,7 @@ class GeoPoint
     rad ||= 6371  # earth's mean radius in km
     @lat    = lat.to_lat
     @lon    = lon.to_lng
-    @radius = rad
-    @unit = :degrees
+    @radius = rad    
   end  
 end
 

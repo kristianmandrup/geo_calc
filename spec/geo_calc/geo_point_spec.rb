@@ -176,6 +176,29 @@ describe GeoPoint do
     end
   end
 
+  describe '#lat=' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+  
+    it 'should set new latitude' do
+      @p1.lat = 60
+      @p1.lat.should == 60
+    end
+
+    it 'should set new latitude within allowed range' do
+      @p1.lat = 520
+      @p1.lat.should be_between(0, 360)
+    end
+
+    describe '#latitude (alias)' do
+      it 'should set latitude' do
+        @p1.lat = 72
+        @p1.latitude.should == 72
+      end
+    end
+  end
+
   describe '#[]' do
     before :each do
       @p1 = GeoPoint.new 50, 5
