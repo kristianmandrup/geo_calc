@@ -55,6 +55,7 @@ class GeoPoint
       alias_method :#{sym}=, :lon=
     }
   end    
+  alias_method :to_lat, :lat
 
   (Symbol.lat_symbols - [:lat]).each do |sym|
     class_eval %{
@@ -62,6 +63,7 @@ class GeoPoint
       alias_method :#{sym}=, :lat=
     }
   end
+  alias_method :to_lng, :lng
 
   def [] key
     case key

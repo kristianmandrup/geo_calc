@@ -174,6 +174,12 @@ describe GeoPoint do
         @p1.latitude.should == 50
       end
     end
+
+    describe '#to_lat (alias)' do
+      it 'should return latitude' do
+        @p1.to_lat.should == 50
+      end
+    end
   end
 
   describe '#lat=' do
