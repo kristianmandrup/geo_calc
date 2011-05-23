@@ -146,6 +146,31 @@ describe GeoPoint do
     end
   end # initializer  
 
+  describe '#reverse_point' do
+    before :each do
+      @p = GeoPoint.new -2, 5
+    end
+  
+    it 'should return reverse GeoPoint (2, -5)' do
+      @p2 = @p.reverse_point
+      @p2.should_not == @p  
+      @p2.lat.should == 2
+      @p2.lng.should == -5
+    end
+  end
+
+  describe '#reverse_point!' do
+    before :each do
+      @p = GeoPoint.new -2, 5
+    end
+  
+    it 'should return reverse GeoPoint (2, -5)' do
+      @p.reverse_point!
+      @p.lat.should == 2
+      @p.lng.should == -5
+    end
+  end
+
   describe '#to_s' do
     before :each do
       @p1 = GeoPoint.new 50.1, 5

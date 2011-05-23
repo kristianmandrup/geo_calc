@@ -79,6 +79,16 @@ class GeoPoint
 
   alias_method :to_dms, :to_s
 
+  def reverse_point!
+    self.lat = lat * -1
+    self.lng = lng * -1
+    self    
+  end
+
+  def reverse_point
+    self.dup.reverse_point!
+  end
+
   def to_lat_lng
     [lat, lng]
   end
