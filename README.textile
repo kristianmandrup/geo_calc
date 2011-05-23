@@ -16,6 +16,13 @@ From command line, run bundler
 
 @$ bundle@
 
+h2. Objetive
+
+The objective of this library is to act as a base for other geo libraries. 
+
+Please take a look at "geo vectors":https://github.com/kristianmandrup/geo_vectors which builds on _geo calc_ and provides various vector operations on geo points. 
+I also have plans to include _geo calc_ in "mongoid geo":https://github.com/kristianmandrup/mongoid_geo, the geo extension library for _Mongoid 2_. 
+
 h2. Quick start (Usage)
 
 First define the points on the globe you want to work with.
