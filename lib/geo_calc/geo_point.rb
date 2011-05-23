@@ -1,4 +1,5 @@
-require 'geo_calc/calculations'
+require 'geo_calc/geo'
+require 'geo_calc/calc'
 
  #  Sample usage:                                                                                 
  #    p1 = GeoPoint.new(51.5136, -0.0983)                                                      
@@ -13,7 +14,7 @@ require 'geo_calc/calculations'
  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 class GeoPoint
-  include GeoCalc
+  include GeoCalc::Calc::All
   # Creates a point on the earth's surface at the supplied latitude / longitude
   # 
   # Constructor

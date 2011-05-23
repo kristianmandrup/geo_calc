@@ -1,0 +1,4 @@
+h3. May 24, 2011
+
+* Refactored main GeoCalc (geo calculations) module into smaller parts
+* Using autoload to load most modules
