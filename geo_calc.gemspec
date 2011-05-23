@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{geo_calc}
-  s.version = "0.5.4"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Kristian Mandrup}]
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    "Changelog.textile",
     "Gemfile",
     "LICENSE.txt",
     "README.textile",
@@ -26,11 +27,17 @@ Gem::Specification.new do |s|
     "VERSION",
     "geo_calc.gemspec",
     "lib/geo_calc.rb",
-    "lib/geo_calc/calculations.rb",
+    "lib/geo_calc/calc.rb",
+    "lib/geo_calc/calc/bearing.rb",
+    "lib/geo_calc/calc/destination.rb",
+    "lib/geo_calc/calc/distance.rb",
+    "lib/geo_calc/calc/intersection.rb",
+    "lib/geo_calc/calc/midpoint.rb",
+    "lib/geo_calc/calc/rhumb.rb",
     "lib/geo_calc/core_ext.rb",
     "lib/geo_calc/geo.rb",
     "lib/geo_calc/geo_point.rb",
-    "lib/geo_calc/js/geo_calc.js",
+    "lib/geo_calc/pretty_print.rb",
     "spec/geo_calc/calculations_spec.rb",
     "spec/geo_calc/core_ext/array_ext_spec.rb",
     "spec/geo_calc/core_ext/hash_ext_spec.rb",
@@ -39,12 +46,13 @@ Gem::Specification.new do |s|
     "spec/geo_calc/core_ext_spec.rb",
     "spec/geo_calc/geo_point_spec.rb",
     "spec/geo_calc/geo_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "vendor/assets/javascript/geo_calc.js"
   ]
   s.homepage = %q{http://github.com/kristianmandrup/geo_calc}
   s.licenses = [%q{MIT}]
   s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.0}
+  s.rubygems_version = %q{1.8.3}
   s.summary = %q{Geo calculation library}
 
   if s.respond_to? :specification_version then
