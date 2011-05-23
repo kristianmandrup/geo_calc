@@ -133,6 +133,8 @@ module NumericGeoExt
   # all degrees between -180 and 180
   def normalize_lng
     case self 
+    when -360, 0, 360
+      0
     when -360..-180
       self % 180      
     when -180..0 
@@ -151,6 +153,10 @@ module NumericGeoExt
   # all degrees between -90 and 90
   def normalize_lat
     case self 
+    when -360, 0, 360
+      0
+    when -180, 180
+      0
     when -360..-270
       self % 90      
     when -270..-180
@@ -165,8 +171,6 @@ module NumericGeoExt
       self % 90
     when 180..270 
       - (self % 90)
-    when 360
-      0
     when 270..360 
       - 90 + (self % 90)
     else

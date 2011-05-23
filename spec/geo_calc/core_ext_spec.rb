@@ -6,6 +6,12 @@ describe GeoPoint do
     describe NumericLatLngExt do
       describe 'Fixnum extension' do
         describe '#to_lat' do              
+          it 'should set origin at 0,0' do
+            origin = [0, 0].geo_point
+            origin.lat.should == 0       
+            origin.lng.should == 0
+          end
+
           it 'should return latitude degree value for 360' do
             360.to_lat.should == 0
           end
