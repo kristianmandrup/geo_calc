@@ -51,7 +51,8 @@ describe GeoCalc do
     # Midpoint: 54°21′44″N, 004°31′50″W
     describe '#midpoint_to' do
       it 'should return the initial bearing from p1 to p2 as 011 16 31' do
-        @p1.midpoint_to(@p2).to_dms.should match /54.+21.+44.+N, 004.+31.+50.+W/
+        mp = @p1.midpoint_to(@p2)
+        mp.to_dms.should match /54.+21.+44.+N, 004.+31.+50.+W/
       end
     end
   end # context

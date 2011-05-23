@@ -61,7 +61,7 @@ module Geo
   # @returns {String} deg formatted as deg/min/secs according to specified format
   # @throws  {TypeError} deg is an object, perhaps DOM object without .value?
 
-  def to_dms deg, format = :dms, dp = nil
+  def to_dms deg, format = :dms, dp = nil 
     deg = begin
       deg.to_f
     rescue
@@ -128,6 +128,7 @@ module Geo
   # @returns {String} Deg/min/seconds
 
   def to_lat deg, format = :dms, dp = 0
+    deg = deg.normalize_lat
     _lat = to_dms deg, format, dp
     _lat == '' ? '' : _lat[1..-1] + (deg<0 ? 'S' : 'N')  # knock off initial '0' for lat!
   end
@@ -141,7 +142,7 @@ module Geo
   # @returns {String} Deg/min/seconds
 
   def to_lon deg, format = :dms, dp = 0
-    deg = (360 - deg) * -1 if deg % 360 > 180
+    deg = deg.normalize_lng
     lon = to_dms deg, format, dp
     lon == '' ? '' : lon + (deg<0 ? 'W' : 'E')
   end

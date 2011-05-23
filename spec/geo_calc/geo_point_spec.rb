@@ -32,7 +32,7 @@ describe GeoPoint do
             p1 = GeoPoint.new "58 38 38N, 003 04 12W"
             p1.should be_a(GeoPoint)
             p1.lat.should be_within(0.5).of(58.38)
-            p1.lon.should be_within(0.5).of(356.5)
+            p1.lon.should be_within(0.5).of(-3)
             p1.unit.should == :degrees
             p1.radius.should == 6371
           end
@@ -43,7 +43,7 @@ describe GeoPoint do
             p1 = GeoPoint.new "(58 38 38N, 003 04 12W)"
             p1.should be_a(GeoPoint)
             p1.lat.should be_within(0.5).of(58.38)
-            p1.lon.should be_within(0.5).of(356.5) # W is negative, then normalize
+            p1.lon.should be_within(0.5).of(-3) # W is negative, then normalize
             p1.unit.should == :degrees
             p1.radius.should == 6371
           end
@@ -138,7 +138,7 @@ describe GeoPoint do
           p1 = GeoPoint.new "58 38 38N", "003 04 12W"
           p1.should be_a(GeoPoint)
           p1.lat.should be_within(0.5).of(58.38)
-          p1.lon.should be_within(0.5).of(356.5)
+          p1.lon.should be_within(0.5).of(-3)
           p1.unit.should == :degrees
           p1.radius.should == 6371
         end
@@ -191,6 +191,17 @@ describe GeoPoint do
       @p1.lat = 60
       @p1.lat.should == 60
     end
+
+    it 'should set new latitude -2' do
+      @p1.lat = -2
+      @p1.lat.should == -2
+    end
+
+    it 'should convert latitude -182 to -2' do
+      @p1.lat = -2
+      @p1.lat.should == -2
+    end
+
 
     it 'should set new latitude within allowed range' do
       @p1.lat = 520

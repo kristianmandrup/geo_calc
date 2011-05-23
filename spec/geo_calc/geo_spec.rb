@@ -91,7 +91,7 @@ describe GeoPoint do
       it 'should convert 58.3 to a longitude String' do
         brng = Geo.to_brng(-58.3)
         brng.to_f.should be_between(0, 360)
-        expr = Regexp.escape "42".concat("\u00B0", "42", "\u2032", "00")
+        expr = Regexp.escape "301".concat("\u00B0", "42", "\u2032", "00")
         brng.should match expr
       end
     end
