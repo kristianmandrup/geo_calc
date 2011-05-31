@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{geo_calc}
-  s.version = "0.6.0"
+  s.version = "0.6.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Kristian Mandrup}]
-  s.date = %q{2011-05-23}
+  s.date = %q{2011-05-31}
   s.description = %q{Geo calculations in ruby and javascript}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
