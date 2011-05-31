@@ -346,4 +346,24 @@ describe GeoPoint do
       end
     end
   end
+  
+  describe '#to_lat_lng' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+  
+    it 'should return GeoPoint as an array of [lat, lng]' do
+      @p1.to_lat_lng.should == [50, 5]
+    end  
+  end
+
+  describe '#to_lng_lat' do
+    before :each do
+      @p1 = GeoPoint.new 50, 5
+    end
+  
+    it 'should return GeoPoint as an array of [lng, lat]' do
+      @p1.to_lng_lat.should == [5, 50]
+    end  
+  end  
 end

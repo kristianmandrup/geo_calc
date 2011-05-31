@@ -1,6 +1,7 @@
 h3. May 31, 2011
 
 * Refactored String#concat
+* Added GeoPoint#to_lng_lat method to play nice with mongoid_geo fields
 
 h3. May 24, 2011
 

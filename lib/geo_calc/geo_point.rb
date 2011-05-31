@@ -94,6 +94,10 @@ class GeoPoint
     [lat, lng]
   end
 
+  def to_lng_lat
+    [lng, lat]
+  end
+
   def to_arr
     a = to_lat_lng
     reverse_arr? ? a.reverse : a
