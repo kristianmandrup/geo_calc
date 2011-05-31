@@ -1,3 +1,7 @@
+h3. May 31, 2011
+
+* Refactored String#concat
+
 h3. May 24, 2011
 
 * Refactored main GeoCalc (geo calculations) module into smaller parts

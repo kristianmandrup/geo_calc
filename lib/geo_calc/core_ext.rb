@@ -266,8 +266,7 @@ end
 class String
   def concat *args
     args.inject(self) do |res, arg| 
-      x = arg.is_a?(String) ? arg : arg.to_s
-      res << x
+      res << arg.to_s
       res
     end
   end
