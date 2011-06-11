@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{geo_calc}
-  s.version = "0.6.1"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Kristian Mandrup}]
-  s.date = %q{2011-05-31}
+  s.date = %q{2011-06-11}
   s.description = %q{Geo calculations in ruby and javascript}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -34,8 +34,6 @@ Gem::Specification.new do |s|
     "lib/geo_calc/calc/intersection.rb",
     "lib/geo_calc/calc/midpoint.rb",
     "lib/geo_calc/calc/rhumb.rb",
-    "lib/geo_calc/core_ext.rb",
-    "lib/geo_calc/geo.rb",
     "lib/geo_calc/geo_point.rb",
     "lib/geo_calc/pretty_print.rb",
     "spec/geo_calc/calculations_spec.rb",
@@ -45,26 +43,29 @@ Gem::Specification.new do |s|
     "spec/geo_calc/core_ext/string_ext_spec.rb",
     "spec/geo_calc/core_ext_spec.rb",
     "spec/geo_calc/geo_point_spec.rb",
-    "spec/geo_calc/geo_spec.rb",
     "spec/spec_helper.rb",
     "vendor/assets/javascript/geo_calc.js"
   ]
   s.homepage = %q{http://github.com/kristianmandrup/geo_calc}
   s.licenses = [%q{MIT}]
   s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.3}
+  s.rubygems_version = %q{1.8.5}
   s.summary = %q{Geo calculation library}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<require_all>, ["~> 1.2.0"])
+      s.add_runtime_dependency(%q<sugar-high>, ["~> 0.4.5.2"])
       s.add_development_dependency(%q<rspec>, [">= 2.5.0"])
       s.add_development_dependency(%q<bundler>, [">= 1"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0.9"])
     else
+      s.add_dependency(%q<require_all>, ["~> 1.2.0"])
+      s.add_dependency(%q<sugar-high>, ["~> 0.4.5.2"])
       s.add_dependency(%q<rspec>, [">= 2.5.0"])
       s.add_dependency(%q<bundler>, [">= 1"])
       s.add_dependency(%q<jeweler>, [">= 1.5.2"])
@@ -72,6 +73,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0.9"])
     end
   else
+    s.add_dependency(%q<require_all>, ["~> 1.2.0"])
+    s.add_dependency(%q<sugar-high>, ["~> 0.4.5.2"])
     s.add_dependency(%q<rspec>, [">= 2.5.0"])
     s.add_dependency(%q<bundler>, [">= 1"])
     s.add_dependency(%q<jeweler>, [">= 1.5.2"])
