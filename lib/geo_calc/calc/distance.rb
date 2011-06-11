@@ -35,7 +35,7 @@ module GeoCalc::Calc
 
       a = Math.sin(dlat/2) * Math.sin(dlat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon/2) * Math.sin(dlon/2)
       c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-      d = base_point.radius * c
+      d = base_point.earth_radius_km * c
       d.round(precision)
     end
   end

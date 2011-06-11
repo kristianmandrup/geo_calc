@@ -1,6 +1,8 @@
 module GeoCalc
   module Dms
     module Converter
+      include GeoCalc::NumericCheckExt
+
       def parse_dms dms_str  
         # check for signed decimal degrees without NSEW, if so return it directly
         return dms_str if is_numeric?(dms_str)
@@ -97,6 +99,8 @@ module GeoCalc
         end
         return dms
       end
+      
+      extend self
     end
   end
 end

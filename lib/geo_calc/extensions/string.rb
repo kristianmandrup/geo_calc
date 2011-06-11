@@ -1,4 +1,6 @@
 class String
+  include ::GeoPoint::CoreExtension
+  
   def concat *args
     args.inject(self) do |res, arg| 
       res << arg.to_s
@@ -7,7 +9,7 @@ class String
   end
 
   def parse_dms
-    Geo.parse_dms self
+    GeoCalc::Dms::Converter.parse_dms self
   end
 
   def to_rad

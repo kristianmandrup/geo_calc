@@ -12,10 +12,9 @@ module GeoUnits
 
     def to_lat deg, format = :dms, dp = 0
       deg = deg.normalize_lat
-      _lat = to_dms deg, format, dp
+      _lat = GeoCalc::Dms::Converter.to_dms deg, format, dp
       _lat == '' ? '' : _lat[1..-1] + (deg<0 ? 'S' : 'N')  # knock off initial '0' for lat!
     end
-
 
     # Convert numeric degrees to deg/min/sec longitude (suffixed with E/W)
     # 
@@ -26,7 +25,7 @@ module GeoUnits
 
     def to_lon deg, format = :dms, dp = 0
       deg = deg.normalize_lng
-      lon = to_dms deg, format, dp
+      lon = GeoCalc::Dms::Converter.to_dms deg, format, dp
       lon == '' ? '' : lon + (deg<0 ? 'W' : 'E')
     end
 
@@ -40,7 +39,7 @@ module GeoUnits
 
     def to_brng deg, format = :dms, dp = 0
       deg = (deg.to_f + 360) % 360  # normalise -ve values to 180º..360º
-      brng =  to_dms deg, format, dp
+      brng = GeoCalc::Dms::Converter.to_dms deg, format, dp
       brng.gsub /360/, '0'  # just in case rounding took us up to 360º!
     end 
 
@@ -71,6 +70,8 @@ module GeoUnits
     alias_method :as_degrees, :to_deg
     alias_method :in_deg,     :to_deg
     alias_method :in_degrees, :to_deg
+    
+    extend self    
   end 
 
   # all degrees between -180 and 180
@@ -117,4 +118,6 @@ module GeoUnits
     (degrees + shift) % 360 
   end
   alias_method :normalize_degrees, :normalize_deg  
+  
+  extend self
 end

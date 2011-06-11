@@ -12,16 +12,17 @@ module GeoUnits
       (lower..upper).cover? self
     end
 
+    
     def to_dms format = :dms, dp = nil
-      Geo.to_dms self, format, dp
+      GeoCalc::Dms::Converter.to_dms self, format, dp
     end
 
     def to_lat_dms format = :dms, dp = nil
-      Geo.to_lat self, format, dp
+      GeoUnits::Converter.to_lat self, format, dp
     end
 
     def to_lon_dms format = :dms, dp = nil
-      Geo.to_lon self, format, dp
+      GeoUnits::Converter.to_lon self, format, dp
     end
   
     # Converts numeric degrees to radians

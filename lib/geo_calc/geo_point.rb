@@ -38,7 +38,7 @@ class GeoPoint
     when 1
       create_from_one args
     when 2
-      create_from_two args
+      create_from_two *args
     else
       raise "GeoPoint must be initialized with either one or to arguments defining the (latitude, longitude) coordinate on the map"
     end
@@ -124,7 +124,7 @@ class GeoPoint
   end
   
   def create_from_one args
-    args = args.first if args.is_a?(Array) && args.first.is_a?(Array)
+    args = args.first
     create_from_two *to_coords(args)
   end
   

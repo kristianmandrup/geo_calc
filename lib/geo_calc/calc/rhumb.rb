@@ -29,7 +29,7 @@ module GeoCalc::Calc
       # if dlon over 180° take shorter rhumb across 180° meridian:
       dlon = 2*Math::PI - dlon if (dlon > Math::PI)
 
-      dist = Math.sqrt(dlat*dlat + q*q*dlon*dlon) * base_point.radius; 
+      dist = Math.sqrt(dlat*dlat + q*q*dlon*dlon) * base_point.earth_radius_km; 
 
       dist.round(4)  # 4 sig figures reflects typical 0.3% accuracy of spherical model
     end
@@ -69,7 +69,7 @@ module GeoCalc::Calc
     # @returns {LatLon} Destination point
 
     def self.rhumb_destination_point base_point, brng, dist
-      d = dist / base_point.radius  # d = angular distance covered on earth's surface
+      d = dist / base_point.earth_radius_km  # d = angular distance covered on earth's surface
       lat1 = base_point.lat.to_rad
       lon1 = base_point.lon.to_rad
       brng = brng.to_rad
