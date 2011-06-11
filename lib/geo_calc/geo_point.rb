@@ -98,21 +98,9 @@ class GeoPoint
     [lng, lat]
   end
 
-  def to_arr
-    a = to_lat_lng
-    reverse_arr? ? a.reverse : a
-  end
-
-  def reverse_arr?
-    @reverse_arr
-  end
-
-  def reverse_arr!
-    @reverse_arr = true
-  end
-
-  def normal_arr!
-    @reverse_arr = false
+  def to_a
+    case 
+    to_lat_lng
   end
   
   protected
