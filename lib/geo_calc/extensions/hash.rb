@@ -1,5 +1,5 @@
 class Hash
-  include GeoPoint::CoreExt  
+  include GeoPoint::CoreExtension  
   
   def to_lat_lng
     [to_lat, to_lng]

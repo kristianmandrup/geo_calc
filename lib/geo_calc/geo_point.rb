@@ -1,5 +1,6 @@
-require 'geo_calc/geo'
+require 'sugar-high/arguments'
 require 'geo_calc/calc'
+require 'geo_calc/extensions'
 
  #  Sample usage:                                                                                 
  #    p1 = GeoPoint.new(51.5136, -0.0983)                                                      
@@ -29,16 +30,15 @@ class GeoPoint
   attr_reader   :lat, :lon  
   
   def initialize *args
-    options = last_option args    
-
+    options = args.is_a?(GeoPoint) ? {} : args.last_option
     earth_radius_km = options[:radius]
     coord_mode = options[:mode]
-
+    
     case args.size
     when 1
-      create_from_one *args, rad
+      create_from_one args
     when 2
-      create_from_two *args, rad
+      create_from_two args
     else
       raise "GeoPoint must be initialized with either one or to arguments defining the (latitude, longitude) coordinate on the map"
     end
@@ -117,14 +117,15 @@ class GeoPoint
   
   protected
 
-  include NumericCheckExt
+  include ::GeoCalc::NumericCheckExt
 
   def to_coords points
     points.send(:"to_#{coord_mode}")
   end
   
-  def create_from_one points
-    create_from_two to_coords(points)
+  def create_from_one args
+    args = args.first if args.is_a?(Array) && args.first.is_a?(Array)
+    create_from_two *to_coords(args)
   end
   
   def create_from_two lat, lon

@@ -1,3 +1,6 @@
+require 'geo_calc/calc'
+require 'geo_calc/extensions'
+
 module GeoUnits
   module Converter
     # Convert numeric degrees to deg/min/sec latitude (suffixed with N/S)

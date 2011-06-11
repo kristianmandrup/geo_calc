@@ -1,5 +1,5 @@
 class Array
-  include GeoPoint::CoreExt
+  include ::GeoPoint::CoreExtension
   
   def to_lat_lng
     raise "Array must contain at least two elements to be converted to latitude and longitude" if !(size >= 2)

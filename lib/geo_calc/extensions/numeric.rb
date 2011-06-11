@@ -1,3 +1,5 @@
+require 'geo_units'
+
 module GeoCalc
   module NumericCheckExt
     def is_numeric? arg
@@ -13,10 +15,10 @@ module GeoCalc
 end
 
 class Fixnum
-  include GeoUnits::NumericExt 
+  include ::GeoUnits::NumericExt 
 end
 
 class Float
-  include GeoUnits::NumericExt
+  include ::GeoUnits::NumericExt
 end
 

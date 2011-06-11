@@ -1,5 +1,5 @@
 class GeoPoint
-  class << self
+  module ClassMethods
     def earth_radius_km  
       @earth_radius_km ||= 6371
     end    
