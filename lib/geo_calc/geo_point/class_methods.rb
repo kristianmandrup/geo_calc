@@ -1,3 +1,5 @@
+require 'geo_calc/geo_point/shared'
+
 class GeoPoint
   module ClassMethods
     def earth_radius_km  

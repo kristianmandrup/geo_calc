@@ -16,12 +16,14 @@ class GeoPoint
   
     protected
 
+    include GeoCalc::NumericCheckExt
+
     def valid_earth_radius? radius_km
       is_numeric?(radius_km) && radius_km.is_between?(6350, 6380)            
     end           
 
     def valid_mode? mode 
-      [:lng_lat, :lat_lng].inlude? mode
+      [:lng_lat, :lat_lng].include? mode
     end    
   end
 end

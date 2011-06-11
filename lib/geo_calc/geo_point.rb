@@ -1,6 +1,7 @@
 require 'sugar-high/arguments'
 require 'geo_calc/calc'
 require 'geo_calc/extensions'
+require 'geo_calc/geo_point/shared'
 
  #  Sample usage:                                                                                 
  #    p1 = GeoPoint.new(51.5136, -0.0983)                                                      
@@ -9,26 +10,24 @@ require 'geo_calc/extensions'
  #    brng = p1.bearing_to(p2)           # in degrees clockwise from north                   
  #    ... etc                                                                                     
  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
- #                                                                                                
- # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
- #  Note that minimal error checking is performed in this example code!                           
- # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 class GeoPoint
   include GeoCalc::Calc::All
-  # Creates a point on the earth's surface at the supplied latitude / longitude
-  # 
-  # Constructor
-  # - Numeric lat: latitude in numeric degrees
-  # - Numeric lon: longitude in numeric degrees
-  # - Numeric [rad=6371]: radius of earth if different value is required from standard 6,371km
 
-  autoload :ClassMethods,   'geo_calc/geo_point/class_methods'
   autoload :Shared,         'geo_calc/geo_point/shared'
+  autoload :ClassMethods,   'geo_calc/geo_point/class_methods'
   autoload :CoreExtension,  'geo_calc/geo_point/core_extension'
 
   attr_reader   :lat, :lon  
-  
+
+  # Creates a point on the earth's surface at the supplied latitude / longitude
+  # 
+  # - Numeric latitude in numeric degrees
+  # - Numeric longitude in numeric degrees  
+
+  # Optional options
+  # - :radius - earth radius in km
+  # - :mode - coordinates mode, either :lng_lat or :lat_lng, otherwise uses global setting as per GeoPoint.coord_mode
   def initialize *args
     options = args.is_a?(GeoPoint) ? {} : args.last_option
     earth_radius_km = options[:radius]
