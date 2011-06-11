@@ -43,8 +43,8 @@ module GeoCalc
 
       return '-,-' if !lat || !lon
 
-      _lat = Geo.to_lat lat, format, dp
-      _lon = Geo.to_lon lon, format, dp
+      _lat = GeoUnits::Converter.to_lat lat, format, dp
+      _lon = GeoUnits::Converter.to_lon lon, format, dp
 
       "#{_lat}, #{_lon}"
     end

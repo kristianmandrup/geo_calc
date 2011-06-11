@@ -14,7 +14,7 @@ module GeoCalc::Calc
     # Returns GeoPoint: Destination point
 
     def self.destination_point base_point, brng, dist
-      dist = dist / base_point.radius  # convert dist to angular distance in radians
+      dist = dist / base_point.earth_radius_km  # convert dist to angular distance in radians
       brng = brng.to_rad 
       lat1 = base_point.lat.to_rad
       lon1 = base_point.lon.to_rad

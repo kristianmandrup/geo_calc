@@ -1,5 +1,6 @@
-require 'geo_calc/geo'
+require 'sugar-high/arguments'
 require 'geo_calc/calc'
+require 'geo_calc/extensions'
 
  #  Sample usage:                                                                                 
  #    p1 = GeoPoint.new(51.5136, -0.0983)                                                      
@@ -22,24 +23,36 @@ class GeoPoint
   # - Numeric lon: longitude in numeric degrees
   # - Numeric [rad=6371]: radius of earth if different value is required from standard 6,371km
 
-  attr_reader   :lat, :lon
-  attr_accessor :radius
+  autoload :ClassMethods,   'geo_calc/geo_point/class_methods'
+  autoload :Shared,         'geo_calc/geo_point/shared'
+  autoload :CoreExtension,  'geo_calc/geo_point/core_extension'
+
+  attr_reader   :lat, :lon  
   
   def initialize *args
-    rad = args.delete(args.size) if is_numeric?(args.last) && args.last.is_between?(6350, 6380)
-    rad ||= 6371 # default
+    options = args.is_a?(GeoPoint) ? {} : args.last_option
+    earth_radius_km = options[:radius]
+    coord_mode = options[:mode]
+    
     case args.size
     when 1
-      create_from_one *args, rad
+      create_from_one args
     when 2
-      create_from_two *args, rad
+      create_from_two *args
     else
       raise "GeoPoint must be initialized with either one or to arguments defining the (latitude, longitude) coordinate on the map"
     end
   end
 
-  def unit
-    :degrees
+  extend ClassMethods
+  include Shared
+
+  def coord_mode
+    @coord_mode ||= GeoPoint.coord_mode
+  end
+
+  def earth_radius_km  
+    @earth_radius_km ||= GeoPoint.earth_radius_km  # default
   end
 
   def lat= value 
@@ -70,7 +83,7 @@ class GeoPoint
     case key
     when Fixnum   
       raise ArgumentError, "Index must be 0 or 1" if !(0..1).cover?(key)
-      to_arr[key] 
+      to_a[key] 
     when String, Symbol
       send(key) if respond_to? key
     else
@@ -99,23 +112,25 @@ class GeoPoint
   end
 
   def to_a
-    case 
-    to_lat_lng
+    send(:"to_#{coord_mode}")
   end
   
   protected
 
-  include NumericCheckExt
-  
-  def create_from_one points, rad = 6371
-    create_from_two *points.to_lat_lng, rad
+  include ::GeoCalc::NumericCheckExt
+
+  def to_coords points
+    points.send(:"to_#{coord_mode}")
   end
   
-  def create_from_two lat, lon, rad = 6371  
-    rad ||= 6371  # earth's mean radius in km
+  def create_from_one args
+    args = args.first
+    create_from_two *to_coords(args)
+  end
+  
+  def create_from_two lat, lon
     @lat    = lat.to_lat
     @lon    = lon.to_lng
-    @radius = rad    
   end  
 end
 

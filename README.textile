@@ -2,6 +2,18 @@ h1. Geo calculations
 
 Geo Calculation library. Useful functions to add to your geo arsenal, fx when designing your own Geo library. 
 
+h2. Status update (June 10, 2011)
+
+- Major refactoring splitting into more logical file/modular structure
+- Use autoload
+- Extract GeoUnits
+- Extract Dms with converter
+- GeoPoint can now have set :coords_mode which affects how Ruby Core objects such as String and Array are parsed into :lng and :lat. 
+
+TODO:
+- The GeoPoint class should be extracted into separate gem, then this geo_calc gem should only have the more generic geo functionality as modules to be included
+where needed in other gems!
+
 h2. Install
 
 @require 'geo_calc'@
