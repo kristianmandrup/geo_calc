@@ -17,8 +17,9 @@ require 'spec_helper'
 # For miles, divide km by 1.609344
 # For nautical miles, divide km by 1.852
 
-describe GeoCalc do 
+require 'geo_point'
 
+describe GeoCalc do 
   # Point 1: 50 03 59N, 005 42 53W
   # Point 2: 58 38 38N, 003 04 12W
   context 'p1= (50 03 59N, 005 42 53W) .. p2= (58 38 38N, 003 04 12W)' do

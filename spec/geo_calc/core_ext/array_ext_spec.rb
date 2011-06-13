@@ -33,15 +33,7 @@ describe GeoPoint do
           @arr = ["3", {:lng => "2"}]
           @arr.to_lat_lng.should == [3, 2]
         end
-      end 
-  
-      describe '#geo_point' do              
-        it 'should return a GeoPoint' do
-          @p = [3, 2].geo_point
-          @p.should be_a(GeoPoint)
-          @p.to_lat_lng.should == [3, 2]
-        end
-      end                            
+      end   
     end # Array
   end
 end

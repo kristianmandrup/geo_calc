@@ -63,15 +63,7 @@ describe GeoPoint do
           @str = "4; 3"
           lambda { @str.to_lat_lng}.should raise_error
         end
-      end 
-  
-      describe '#geo_point' do              
-        it 'should return a GeoPoint' do
-          @p = "3, 2".geo_point
-          @p.should be_a(GeoPoint)            
-          @p.to_lat_lng.should == [3, 2]
-        end
-      end                 
+      end   
     end # String
   end
 end

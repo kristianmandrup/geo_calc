@@ -5,11 +5,12 @@ module GeoCalc::Calc
     end
 
     # Returns the midpoint between this point and the supplied point.
-    #   see http:#mathforum.org/library/drmath/view/51822.html for derivation
+    # see(http:#mathforum.org/library/drmath/view/51822.html for derivation)
     # 
-    # - GeoPoint point: Latitude/longitude of destination point
-    # Returns GeoPoint: Midpoint between this point and the supplied point
-  
+    # @param [GeoPoint] base_point: Starting point (latitude, longitude)
+    # @param [GeoPoint] point: Destination point (latitude, longitude)
+    # @return [Array] Midpoint between this point and the supplied point
+    #
     def self.midpoint_to base_point, point
       lat1 = base_point.lat.to_rad
       lon1 = base_point.lon.to_rad;
@@ -23,7 +24,8 @@ module GeoCalc::Calc
 
       lon3 = lon1 + Math.atan2(by, Math.cos(lat1) + bx)
 
-      GeoPoint.new lat3.to_deg, lon3.to_deg
+      [lat3.to_deg, lon3.to_deg]
+      # GeoPoint.new 
     end    
   end
 end

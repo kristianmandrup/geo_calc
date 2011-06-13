@@ -1,4 +1,4 @@
-module GeoCalc::Calc
+module GeoCalc
   module Intersection
     def intersection brng1, p2, brng2
       GeoCalc::Calc::Intersection.intersection self, brng1, p2, brng2
@@ -8,11 +8,11 @@ module GeoCalc::Calc
     # 
     #   see http:#williams.best.vwh.net/avform.htm#Intersection
     # 
-    # @param   {LatLon} p1: First point
-    # @param   {Number} brng1: Initial bearing from first point
-    # @param   {LatLon} p2: Second point
-    # @param   {Number} brng2: Initial bearing from second point
-    # @returns {LatLon} Destination point (null if no unique intersection defined)
+    # @param   [GeoPoint] p1: First point
+    # @param   [Number] brng1: Initial bearing from first point
+    # @param   [GeoPoint] p2: Second point
+    # @param   [Number] brng2: Initial bearing from second point
+    # @returns [Array] Destination point (null if no unique intersection defined)
 
     def self.intersection p1, brng1, p2, brng2
       lat1 = p1.lat.to_rad
@@ -66,7 +66,7 @@ module GeoCalc::Calc
       lon3 = lon1 + dlon13;
       lon3 = (lon3 + Math::PI) % (2*Math::PI) - Math::PI  # normalise to -180..180º
 
-      GeoPoint.new lat3.to_deg, lon3.to_deg
-    end    
+      [lat3.to_deg, lon3.to_deg]
+    end
   end
 end

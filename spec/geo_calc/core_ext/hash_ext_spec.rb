@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe GeoPoint do 
   describe 'ruby core Class extensions' do
     describe 'Hash extension' do
@@ -30,15 +32,7 @@ describe GeoPoint do
           @hash = {:lng => 2, :lat => "3"}
           @hash.to_lat_lng.should == [3, 2]
         end
-      end 
-  
-      describe '#geo_point' do              
-        it 'should return a GeoPoint' do
-          @p = {:lng => 2, :lat => "3"}.geo_point
-          @p.should be_a(GeoPoint)            
-          @p.to_lat_lng.should == [3, 2]
-        end
-      end         
+      end  
     end # Hash 
   end
 end

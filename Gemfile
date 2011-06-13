@@ -1,8 +1,8 @@
 source "http://rubygems.org"
 
 gem "require_all",    "~> 1.2.0"
-gem "sugar-high",     "~> 0.4.6.2"
-gem "geo_units",      :path => '/Users/kristianconsult/ruby-gems/geo_units'
+gem "sugar-high",     "~> 0.4.6.3"
+gem "geo_units"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

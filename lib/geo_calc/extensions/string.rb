@@ -1,15 +1,4 @@
-class String  
-  def concat *args
-    args.inject(self) do |res, arg| 
-      res << arg.to_s
-      res
-    end
-  end
-
-  def parse_dms
-    GeoCalc::Dms::Converter.parse_dms self
-  end
-
+class String
   def to_rad
     parse_dms.to_rad
   end
@@ -31,12 +20,16 @@ class String
   end
   
   def to_lat
-    raise "An empty String has no latitude" if empty?
-    geo_clean.parse_dms.to_f.to_lat
+    raise "An empty String has no latitude" if self.empty?
+    s = geo_clean
+    s = s.parse_dms if s.respond_to? :parse_dms
+    s.to_f.to_lat
   end
 
   def to_lng
-    raise "An empty String has no latitude" if empty?
-    geo_clean.parse_dms.to_f.to_lng
+    raise "An empty String has no latitude" if self.empty?
+    s = geo_clean
+    s = s.parse_dms if s.respond_to? :parse_dms    
+    s.to_f.to_lng
   end
 end

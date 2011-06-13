@@ -1,41 +1,41 @@
+require 'geo_units'
+
 module GeoCalc
   module PrettyPrint
-    # Returns the latitude of this point; signed numeric degrees if no format, otherwise format & dp 
-    # as per Geo.to_lat
-    # 
-    # - String [format]: Return value as 'd', 'dm', 'dms'
-    # - Numeric [dp=0|2|4]: No of decimal places to display
-    #
-    # Returns {Numeric|String}: Numeric degrees if no format specified, otherwise deg/min/sec
-    # 
 
+    # Returns the latitude of this point; signed numeric degrees if no format, otherwise format & dp 
+    # 
+    # @param [String] format: Return value as 'd', 'dm', 'dms'
+    # @param [Numeric] dp: No of decimal places to display (0|2|4)
+    #
+    # @return   [Numeric|String]: Numeric degrees if no format specified, otherwise deg/min/sec
+    # 
     def to_lat format = :dms, dp = 0
       return lat if !format
-      Geo.to_lat lat, format, dp
+      GeoUnits::Converter.to_lat lat, format, dp
     end
-
 
     # Returns the longitude of this point; signed numeric degrees if no format, otherwise format & dp 
     # as per Geo.toLon()
     # 
-    # @param   {String} [format]: Return value as 'd', 'dm', 'dms'
-    # @param   {Number} [dp=0|2|4]: No of decimal places to display
-    # @returns {Number|String} Numeric degrees if no format specified, otherwise deg/min/sec
+    # @param   [String} [format]: Return value as 'd', 'dm', 'dms'
+    # @param   [Number} [dp=0|2|4]: No of decimal places to display
+    # @return [Number|String} Numeric degrees if no format specified, otherwise deg/min/sec
     # 
     # @requires Geo
 
     def to_lon format, dp
       return lon if !format
-      Geo.to_lon lon, format, dp
+      GeoUnits::Converter.to_lon lon, format, dp
     end
 
 
     # Returns a string representation of this point; format and dp as per lat()/lon()
     # 
-    # @param   {String} [format]: Return value as 'd', 'dm', 'dms'
-    # @param   {Number} [dp=0|2|4]: No of decimal places to display
+    # @param   [String] format: Return value as 'd', 'dm', 'dms'
+    # @param   [Number] dp: No of decimal places to display (0|2|4)
 
-    # @returns {String} Comma-separated latitude/longitude
+    # @return [String] Comma-separated latitude/longitude
     # 
 
     def to_s format = :dms, dp = 0 

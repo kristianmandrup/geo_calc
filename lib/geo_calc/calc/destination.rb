@@ -24,7 +24,8 @@ module GeoCalc::Calc
 
       lon2 = (lon2 + 3*Math::PI) % (2*Math::PI) - Math::PI  # normalise to -180...+180   
 
-      GeoPoint.new lat2.to_deg, lon2.to_deg
+      [lat2.to_deg, lon2.to_deg]
+      # GeoPoint.new lat2.to_deg, lon2.to_deg      
     end
   end
 end

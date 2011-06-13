@@ -1,16 +1,21 @@
 module GeoCalc::Calc
   module Rhumb
+    # Returns the distance from this point to the supplied point, in km, travelling along a rhumb line
+    # 
+    # see(http:#williams.best.vwh.net/avform.htm#Rhumb)
+    #
+    # @param  [GeoPoint] Destination point latitude and longitude of 
+    # @return [Numeric] Distance in km between start and destination point
     def rhumb_distance_to point
       GeoCalc::Calc::Rhumb.rhumb_distance_to self, point
     end
 
     # Returns the distance from this point to the supplied point, in km, travelling along a rhumb line
-    # 
-    #   see http:#williams.best.vwh.net/avform.htm#Rhumb
-    # 
-    # - GeoPoint point: Latitude/longitude of destination point
-    # Returns Numeric: Distance in km between this point and destination point
-
+    #
+    # @param  [GeoPoint] Start point with (latitude, longitude)
+    # @param  [GeoPoint] Destination point (latitude, longitude)
+    # @return [Numeric] Distance in km between start and destination point
+    #
     def self.rhumb_distance_to base_point, point
       lat1 = base_point.lat.to_rad
       lat2 = point.lat.to_rad
@@ -34,14 +39,19 @@ module GeoCalc::Calc
       dist.round(4)  # 4 sig figures reflects typical 0.3% accuracy of spherical model
     end
 
+    # Returns the bearing from this point to the supplied point along a rhumb line, in degrees
+    #
+    # @param  [GeoPoint] Destination point (latitude, longitude)
+    # @return [Numeric] Bearing in degrees from North
+    #
     def rhumb_bearing_to point
       GeoCalc::Calc::Rhumb.rhumb_bearing_to self, point
     end
     # Returns the bearing from this point to the supplied point along a rhumb line, in degrees
     # 
-    # - GeoPoint point: Latitude/longitude of destination point
-    # Returns Numeric: Bearing in degrees from North
-
+    # @param  [GeoPoint] Destination point (latitude, longitude)
+    # @return [Numeric] Bearing in degrees from North
+    #
     def self.rhumb_bearing_to base_point, point
       lat1 = base_point.lat.to_rad
       lat2 = point.lat.to_rad
@@ -58,16 +68,24 @@ module GeoCalc::Calc
       (brng.to_deg+360) % 360
     end
 
+    # Returns the destination point from this point having travelled the given distance (in km) on the 
+    # given bearing along a rhumb line
+    #
+    # @param   [Number] brng: Bearing in degrees from North
+    # @param   [Number] dist: Distance in km
+    # @returns [Array] Destination point as an array [lat, long]
     def rhumb_destination_point brng, dist
       GeoCalc::Calc::Rhumb.rhumb_destination_point self, brng, dist
     end
+
     # Returns the destination point from this point having travelled the given distance (in km) on the 
     # given bearing along a rhumb line
-    # 
-    # @param   {Number} brng: Bearing in degrees from North
-    # @param   {Number} dist: Distance in km
-    # @returns {LatLon} Destination point
-
+    #
+    # @param   [GeoPoint] Starting point (latitude, longitude)     
+    # @param   [Number] brng: Bearing in degrees from North
+    # @param   [Number] dist: Distance in km
+    # @returns [Array] Destination point as an array [lat, long]
+    #
     def self.rhumb_destination_point base_point, brng, dist
       d = dist / base_point.earth_radius_km  # d = angular distance covered on earth's surface
       lat1 = base_point.lat.to_rad
@@ -92,7 +110,8 @@ module GeoCalc::Calc
       end
       lon2 = (lon1+dlon+3*Math::PI) % (2*Math::PI) - Math::PI
 
-      GeoPoint.new lat2.to_deg, lon2.to_deg
+      [lat2.to_deg, lon2.to_deg]
+      # GeoPoint.new 
     end
   end
 end
