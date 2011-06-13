@@ -1,7 +1,9 @@
+include 'sugar-high/numeric'
+
 module GeoCalc
   module Dms
     module Converter
-      include GeoCalc::NumericCheckExt
+      include NumericCheckExt
 
       def parse_dms dms_str  
         # check for signed decimal degrees without NSEW, if so return it directly

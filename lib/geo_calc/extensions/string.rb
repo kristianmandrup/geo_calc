@@ -1,6 +1,4 @@
-class String
-  include ::GeoPoint::CoreExtension
-  
+class String  
   def concat *args
     args.inject(self) do |res, arg| 
       res << arg.to_s

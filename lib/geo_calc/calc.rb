@@ -1,8 +1,4 @@
 module GeoCalc
-  autoload :PrettyPrint,  'geo_calc/pretty_print'
-end
-
-module GeoCalc
   module Calc
     autoload :Bearing,      'geo_calc/calc/bearing'
     autoload :Destination,  'geo_calc/calc/destination'
