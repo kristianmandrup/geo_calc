@@ -1,4 +1,4 @@
-module GeoCalc::Calc
+module GeoCalc
   module Bearing
     def bearing_to point
       GeoCalc::Calc::Bearing.bearing_to self, point

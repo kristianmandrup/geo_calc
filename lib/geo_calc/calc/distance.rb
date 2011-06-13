@@ -3,7 +3,7 @@
  #   - www.movable-type.co.uk/scripts/latlong.html
  #                                                                                                
 
-module GeoCalc::Calc
+module GeoCalc
   module Distance  
     def distance_to point, precision = 4
       GeoCalc::Calc::Distance.distance_to self, point, precision

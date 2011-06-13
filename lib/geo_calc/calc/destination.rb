@@ -1,4 +1,4 @@
-module GeoCalc::Calc
+module GeoCalc
   module Destination
     def destination_point brng, dist
       GeoCalc::Calc::Destination.destination_point self, brng, dist

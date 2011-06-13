@@ -1,4 +1,4 @@
-module GeoCalc::Calc
+module GeoCalc
   module Midpoint
     def midpoint_to point
       GeoCalc::Calc::Midpoint.midpoint_to self, point

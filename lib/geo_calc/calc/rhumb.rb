@@ -1,4 +1,4 @@
-module GeoCalc::Calc
+module GeoCalc
   module Rhumb
     # Returns the distance from this point to the supplied point, in km, travelling along a rhumb line
     # 
