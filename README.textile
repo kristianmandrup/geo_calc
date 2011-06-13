@@ -2,17 +2,12 @@ h1. Geo calculations
 
 Geo Calculation library. Useful functions to add to your geo arsenal, fx when designing your own Geo library. 
 
-h2. Status update (June 10, 2011)
+h2. Status update (June 14, 2011)
 
-- Major refactoring splitting into more logical file/modular structure
-- Use autoload
-- Extract GeoUnits
-- Extract Dms with converter
-- GeoPoint can now have set :coords_mode which affects how Ruby Core objects such as String and Array are parsed into :lng and :lat. 
+Extracted GeoUnits and GeoPoint into separate gems: 
 
-TODO:
-- The GeoPoint class should be extracted into separate gem, then this geo_calc gem should only have the more generic geo functionality as modules to be included
-where needed in other gems!
+* "geo_units":https://github.com/kristianmandrup/geo_units 
+* "geo_point":https://github.com/kristianmandrup/geo_point
 
 h2. Install
 
@@ -28,46 +23,14 @@ From command line, run bundler
 
 @$ bundle@
 
-h2. Objetive
+h2. Objective
 
 The objective of this library is to act as a base for other geo libraries. 
 
-Please take a look at "geo vectors":https://github.com/kristianmandrup/geo_vectors which builds on _geo calc_ and provides various vector operations on geo points. 
-I also have plans to include _geo calc_ in "mongoid geo":https://github.com/kristianmandrup/mongoid_geo, the geo extension library for _Mongoid 2_. 
+The geo calculation API only requires that the point objects used, have a #lat and #lon method, which return the latitude and longitude respectively.
+The lat/lng should each be a Numeric (ie. Float or Fixnum) within respective 'geo ranges': (-90 to 90, -180 to 180).
 
-h2. Quick start (Usage)
-
-First define the points on the globe you want to work with.
-The GeoPoint initializer is very flexible with regards to the arguments it can handle.
-
-<pre>
-  # factory method on core ruby classes
-  "51 12 03 N, 24 10 02 E".geo_point
-  [51.5136, -0.0983].geo_point
-  {:latitude => 27.3, :longitude => "24 10 02 E"}.geo_point
-
-  # two arguments
-  p1 = GeoPoint.new 51.5136, -0.0983
-  p2 = GeoPoint.new "14 11 01 N", "-0.0983"
-  p3 = GeoPoint.new 51.5136, "24 10 02 E"
-
-  # a String
-  p1 = GeoPoint.new "51.5136, -0.0983"
-  p1 = GeoPoint.new "51.5136, 24 10 02 E"
-  p3 = GeoPoint.new "51.4778, -0.0015"  
-  p1 = GeoPoint.new "51 12 03 N, 24 10 02 E"
-
-  # an Array
-  p2 = GeoPoint.new [51.5136, -0.0983]
-  p2 = GeoPoint.new [51.5136, "24 10 02 E"]
-  p2 = GeoPoint.new [51.5136, {:lon => 27.3}]
-
-  # a Hash
-  p4 = GeoPoint.new {:lat => 27.3, :lng => "24 10 02 E"}
-  p4 = GeoPoint.new {:latitude => 27.3, :longitude => "24 10 02 E"}  
-</pre>
-
-h3. Shortes distance
+h3. Shortest distance
 
 Calculate *distance in kms between points p1 and p2*
 
@@ -128,20 +91,6 @@ h2. Rhumb lines
 <pre>
   p1.rhumb_destination_point(brng, dist)  
 </pre>    
-
-h2. Utility methods
-
-These are some of the utility methods you can use on a GeoPoint object
-  
-<pre>
-  p1 = GeoPoint.new 5.1, -7
-  p1.lat          # latitude
-  p1.lon          # longitude
-  p1.to_arr       # array representation of [lat, lng]
-  p1.reverse_arr! # reverse to_arr to instead return [lng, lat]
-  p1.normal_arr!  # return to normal to_arr functionality: [lat, lng]
-  p1.to_s         # string representation
-</pre>  
 
 h2. Core Extensions
 
