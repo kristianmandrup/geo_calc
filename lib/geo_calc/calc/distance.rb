@@ -6,7 +6,7 @@
 module GeoCalc
   module Distance  
     def distance_to point, precision = 4
-      GeoCalc::Calc::Distance.distance_to self, point, precision
+      GeoCalc::Distance.distance_to self, point, precision
     end
 
     # Returns the distance from this point to the supplied point, in km 
@@ -15,10 +15,10 @@ module GeoCalc
     # from: Haversine formula - R. W. Sinnott, "Virtues of the Haversine",
     #       Sky and Telescope, vol 68, no 2, 1984
     # 
-    # GeoPoint point: Latitude/longitude of destination point
-    # - Numeric precision=4: number of significant digits to use for returned value
+    # @param [GeoPoint] Latitude/longitude of destination point
+    # @param [Numeric] number of significant digits to use for returned value
     #
-    # Returns - Numeric distance in km between this point and destination point
+    # @return [Numeric] distance in km between this point and destination point
   
     def self.distance_to base_point, point, precision = 4
       # default 4 sig figs reflects typical 0.3% accuracy of spherical model

@@ -1,7 +1,7 @@
 module GeoCalc
   module Midpoint
     def midpoint_to point
-      GeoCalc::Calc::Midpoint.midpoint_to self, point
+      GeoCalc::Midpoint.midpoint_to self, point
     end
 
     # Returns the midpoint between this point and the supplied point.

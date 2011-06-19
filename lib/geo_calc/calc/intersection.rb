@@ -1,7 +1,7 @@
 module GeoCalc
   module Intersection
     def intersection brng1, p2, brng2
-      GeoCalc::Calc::Intersection.intersection self, brng1, p2, brng2
+      GeoCalc::Intersection.intersection self, brng1, p2, brng2
     end
 
     # Returns the point of intersection of two paths defined by point and bearing
@@ -12,7 +12,7 @@ module GeoCalc
     # @param   [Number] brng1: Initial bearing from first point
     # @param   [GeoPoint] p2: Second point
     # @param   [Number] brng2: Initial bearing from second point
-    # @returns [Array] Destination point (null if no unique intersection defined)
+    # @return [Array] Destination point (null if no unique intersection defined)
 
     def self.intersection p1, brng1, p2, brng2
       lat1 = p1.lat.to_rad

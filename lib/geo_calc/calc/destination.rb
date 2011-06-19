@@ -1,17 +1,17 @@
 module GeoCalc
   module Destination
     def destination_point brng, dist
-      GeoCalc::Calc::Destination.destination_point self, brng, dist
+      GeoCalc::Destination.destination_point self, brng, dist
     end
 
     # Returns the destination point from this point having travelled the given distance (in km) on the 
     # given initial bearing (bearing may vary before destination is reached)
     # 
-    #   see http:#williams.best.vwh.net/avform.htm#LL
+    # see(http:#williams.best.vwh.net/avform.htm#LL)
     # 
-    # - Numeric bearing: Initial bearing in degrees
-    # - Numeric dist: Distance in km
-    # Returns GeoPoint: Destination point
+    # @param [Numeric] Initial bearing in degrees
+    # @param [Numeric] Distance in km
+    # @return [Array] Destination point
 
     def self.destination_point base_point, brng, dist
       dist = dist / base_point.earth_radius_km  # convert dist to angular distance in radians

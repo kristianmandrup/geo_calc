@@ -96,7 +96,7 @@ describe GeoCalc do
     # Intersection point:   50°54′06″N, 004°29′39″E
     describe '#intersection' do      
       it 'should return the intersection between p1 and p2 as (50 54 06 N, 004 29 39 E)' do
-        GeoCalc::Calc::Intersection.intersection(@p1, @brng1, @p2, @brng2).to_dms.should match /50.+54.+06.+N, 004.+29.+39.+E/
+        GeoCalc::Intersection.intersection(@p1, @brng1, @p2, @brng2).to_dms.should match /50.+54.+06.+N, 004.+29.+39.+E/
       end
     end
   end

@@ -7,7 +7,7 @@ module GeoCalc
     # @param  [GeoPoint] Destination point latitude and longitude of 
     # @return [Numeric] Distance in km between start and destination point
     def rhumb_distance_to point
-      GeoCalc::Calc::Rhumb.rhumb_distance_to self, point
+      GeoCalc::Rhumb.rhumb_distance_to self, point
     end
 
     # Returns the distance from this point to the supplied point, in km, travelling along a rhumb line
@@ -45,7 +45,7 @@ module GeoCalc
     # @return [Numeric] Bearing in degrees from North
     #
     def rhumb_bearing_to point
-      GeoCalc::Calc::Rhumb.rhumb_bearing_to self, point
+      GeoCalc::Rhumb.rhumb_bearing_to self, point
     end
     # Returns the bearing from this point to the supplied point along a rhumb line, in degrees
     # 
@@ -75,7 +75,7 @@ module GeoCalc
     # @param   [Number] dist: Distance in km
     # @returns [Array] Destination point as an array [lat, long]
     def rhumb_destination_point brng, dist
-      GeoCalc::Calc::Rhumb.rhumb_destination_point self, brng, dist
+      GeoCalc::Rhumb.rhumb_destination_point self, brng, dist
     end
 
     # Returns the destination point from this point having travelled the given distance (in km) on the 
