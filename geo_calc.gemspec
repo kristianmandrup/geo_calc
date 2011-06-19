@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{geo_calc}
-  s.version = "0.7.3"
+  s.version = "0.7.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Kristian Mandrup}]
-  s.date = %q{2011-06-13}
+  s.date = %q{2011-06-19}
   s.description = %q{Geo calculations in ruby and javascript}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
     "lib/geo_calc/extensions/hash.rb",
     "lib/geo_calc/extensions/string.rb",
     "lib/geo_calc/extensions/symbol.rb",
+    "lib/geo_calc/geo_calculations.rb",
     "lib/geo_calc/pretty_print.rb",
     "spec/geo_calc/calculations_spec.rb",
     "spec/geo_calc/core_ext/array_ext_spec.rb",
@@ -62,9 +63,10 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<require_all>, ["~> 1.2.0"])
       s.add_runtime_dependency(%q<sugar-high>, ["~> 0.4.6.3"])
-      s.add_runtime_dependency(%q<geo_units>, [">= 0.2.0"])
+      s.add_runtime_dependency(%q<geo_units>, ["~> 0.2.1"])
       s.add_runtime_dependency(%q<i18n>, [">= 0"])
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.1"])
+      s.add_development_dependency(%q<geo_point>, [">= 0.2.1"])
       s.add_development_dependency(%q<rspec>, [">= 2.5.0"])
       s.add_development_dependency(%q<bundler>, [">= 1"])
       s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
@@ -73,9 +75,10 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<require_all>, ["~> 1.2.0"])
       s.add_dependency(%q<sugar-high>, ["~> 0.4.6.3"])
-      s.add_dependency(%q<geo_units>, [">= 0.2.0"])
+      s.add_dependency(%q<geo_units>, ["~> 0.2.1"])
       s.add_dependency(%q<i18n>, [">= 0"])
       s.add_dependency(%q<activesupport>, [">= 3.0.1"])
+      s.add_dependency(%q<geo_point>, [">= 0.2.1"])
       s.add_dependency(%q<rspec>, [">= 2.5.0"])
       s.add_dependency(%q<bundler>, [">= 1"])
       s.add_dependency(%q<jeweler>, [">= 1.5.2"])
@@ -85,9 +88,10 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<require_all>, ["~> 1.2.0"])
     s.add_dependency(%q<sugar-high>, ["~> 0.4.6.3"])
-    s.add_dependency(%q<geo_units>, [">= 0.2.0"])
+    s.add_dependency(%q<geo_units>, ["~> 0.2.1"])
     s.add_dependency(%q<i18n>, [">= 0"])
     s.add_dependency(%q<activesupport>, [">= 3.0.1"])
+    s.add_dependency(%q<geo_point>, [">= 0.2.1"])
     s.add_dependency(%q<rspec>, [">= 2.5.0"])
     s.add_dependency(%q<bundler>, [">= 1"])
     s.add_dependency(%q<jeweler>, [">= 1.5.2"])
