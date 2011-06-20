@@ -44,6 +44,22 @@ describe GeoPoint do
           @str.to_lat_lng.should == [4, 3]
         end
 
+        it 'should return Array with lat, lng' do
+          @str = "04 38 08 W, 58 38 08 N"
+          arr = @str.to_lat_lng
+          # W = west is longitude and should be last! 
+          arr.last.should < 0
+          arr.first.should > 58          
+        end
+
+        it 'should return Array with lng, lat' do
+          @str = "58 38 08 N, 04 38 08 W"
+          arr = @str.to_lat_lng
+          # W = west is longitude and should be last! 
+          arr.last.should < 0
+          arr.first.should > 58          
+        end
+
         it 'should raise error if only latitude' do
           @str = "4"
           lambda { @str.to_lat_lng}.should raise_error
@@ -64,6 +80,50 @@ describe GeoPoint do
           lambda { @str.to_lat_lng}.should raise_error
         end
       end   
+
+      describe '#to_lng_lat' do              
+        it 'should return Array with lng, lat' do
+          @str = "4, 3"
+          @str.to_lng_lat.should == [3, 4]
+        end
+
+        it 'should return Array with lng, lat' do
+          @str = "04 38 08 W, 58 38 08 N"
+          arr = @str.to_lng_lat 
+          # W = west is longitude and should be first!
+          arr.first.should < 5
+          arr.last.should > 58          
+        end
+
+        it 'should return Array with lng, lat' do
+          @str = "58 38 08 N, 04 38 08 W"
+          arr = @str.to_lng_lat
+          # W = west is longitude and should be first!
+          arr.first.should < 5
+          arr.last.should > 58          
+        end
+
+        it 'should raise error if only latitude' do
+          @str = "4"
+          lambda { @str.to_lng_lat}.should raise_error
+        end
+
+        it 'should raise error if "," but only latitude' do
+          @str = "4,"
+          lambda { @str.to_lng_lat}.should raise_error
+        end
+
+        it 'should raise error if "," in bad position' do
+          @str = ", 4 3"
+          lambda { @str.to_lng_lat}.should raise_error
+        end
+
+        it 'should raise error if not using "," as seperator' do
+          @str = "4; 3"
+          lambda { @str.to_lng_lat}.should raise_error
+        end
+      end   
+
     end # String
   end
 end

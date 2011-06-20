@@ -12,11 +12,15 @@ class String
   end
     
   def to_lat_lng  
-    geo_clean.split(',').to_lat_lng
+    a = geo_clean.split(',').map(&:strip)
+    a = (a.last.is_a?(String) && a.last =~ /[N|S]$/) ? a.reverse : a
+    a.to_lat_lng
   end
 
   def to_lng_lat  
-    geo_clean.split(',').to_lng_lat
+    a = geo_clean.split(',')
+    a = (a.last.is_a?(String) && a.last =~ /[N|S]$/) ? a.reverse : a
+    a.to_lng_lat
   end
   
   def to_lat
