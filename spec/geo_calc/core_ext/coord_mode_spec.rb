@@ -1,17 +1,10 @@
 require 'spec_helper'
-# require 'geo_point'
 
 class GeoPoint
   mattr_accessor :coord_mode
 end
 
 describe 'GeoPoint.coord_mode' do
-  context 'coord_mode is nil (default is :lat_lng)' do  
-    before do
-      GeoPoint.coord_mode = nil
-    end    
-  end
-
   # make shared example for default mode!
   context 'coord_mode is :lat_lng' do  
     before do
@@ -43,15 +36,13 @@ describe 'GeoPoint.coord_mode' do
     describe 'String' do
       describe '#to_lat_lng' do
         it 'should return Array in same order' do
-          @str = "4, 3"
-          @str.to_lat_lng.should == [4, 3]
+          "4, 3".to_lat_lng.should == [4, 3]
         end
       end
 
       describe '#to_lng_lat' do
         it 'should return reversed Array' do
-          @str = "4, 3"
-          @str.to_lng_lat.should == [3,4]
+          "4, 3".to_lng_lat.should == [3,4]
         end
       end
     end # String    
@@ -87,15 +78,13 @@ describe 'GeoPoint.coord_mode' do
     describe 'String' do
       describe '#to_lng_lat' do
         it 'should return Array in same order' do
-          @str = "4, 3"
-          @str.to_lng_lat.should == [4, 3]
+          "4, 3".to_lng_lat.should == [4, 3]
         end
       end
 
       describe '#to_lat_lng' do
         it 'should return reversed Array' do
-          @str = "4, 3"
-          @str.to_lat_lng.should == [3,4]
+          "4, 3".to_lat_lng.should == [3,4]
         end
       end
     end # String 

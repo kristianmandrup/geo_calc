@@ -19,6 +19,11 @@ describe GeoPoint do
           @str = "50 03 59N"
           @str.to_lat.should be_within(0.4).of(50)
         end
+        
+        it 'should not allow conversion of longitude format to latitude' do
+          str = "50 03 59E"
+          lambda { str.to_lat}.should raise_error GeoDirectionMisMatch 
+        end        
       end      
 
       describe '#to_lng' do              
@@ -29,12 +34,17 @@ describe GeoPoint do
 
         it 'should return latitude' do
           @str = "4"
-          @str.to_lat.should == 4
+          @str.to_lng.should == 4
         end
 
         it 'should convert to latitude' do
           @str = "50 03 59E"
-          @str.to_lat.should be_within(0.4).of(50)
+          @str.to_lng.should be_within(0.4).of(50)
+        end
+
+        it 'should not allow conversion of latitude format to longitude' do
+          str = "50 03 59N"
+          lambda { str.to_lng}.should raise_error GeoDirectionMisMatch 
         end
       end
 
