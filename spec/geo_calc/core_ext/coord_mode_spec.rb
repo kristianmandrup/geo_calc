@@ -23,12 +23,20 @@ describe 'GeoPoint.coord_mode' do
         it 'should reverse array' do
           [2, 3].to_lng_lat.should == [3, 2]
         end
+
+        it 'should reverse array and convert strings to floats' do
+          ["23.5", "-48"].to_lng_lat.should == [-48, 23.5]
+        end
       end
 
       describe '#to_lat_lng' do
         it 'should not reverse array' do
           [2, 3].to_lat_lng.should == [2, 3]
         end
+        
+        it 'should not reverse array but convert strings to floats' do
+          ["23.5", "-48"].to_lat_lng.should == [23.5, -48]
+        end        
       end
     end # Array
     
@@ -59,12 +67,20 @@ describe 'GeoPoint.coord_mode' do
         it 'should not reverse array' do
           [2, 3].to_lng_lat.should == [2, 3]
         end
+        
+        it 'should not reverse array but convert strings to floats' do
+          ["23.5", "-48"].to_lng_lat.should == [23.5, -48]
+        end                        
       end
       
       describe '#to_lat_lng' do
         it 'should reverse array' do
           [2, 3].to_lat_lng.should == [3, 2]
-        end
+        end 
+        
+        it 'should reverse array and convert strings to floats' do
+          ["23.5", "-48"].to_lat_lng.should == [-48, 23.5]
+        end                
       end      
     end # Array
 
