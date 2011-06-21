@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{geo_calc}
-  s.version = "0.7.5"
+  s.version = "0.7.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Kristian Mandrup}]
-  s.date = %q{2011-06-20}
+  s.date = %q{2011-06-21}
   s.description = %q{Geo calculations in ruby and javascript}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -43,6 +43,8 @@ Gem::Specification.new do |s|
     "lib/geo_calc/pretty_print.rb",
     "spec/geo_calc/calculations_spec.rb",
     "spec/geo_calc/core_ext/array_ext_spec.rb",
+    "spec/geo_calc/core_ext/coord_mode_spec.rb",
+    "spec/geo_calc/core_ext/dms_coord_mode_spec.rb",
     "spec/geo_calc/core_ext/hash_ext_spec.rb",
     "spec/geo_calc/core_ext/numeric_geo_ext_spec.rb",
     "spec/geo_calc/core_ext/string_ext_spec.rb",
