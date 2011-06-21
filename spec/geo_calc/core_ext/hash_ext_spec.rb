@@ -41,50 +41,6 @@ describe GeoPoint do
           @hash.to_lng_lat.should == [2, 3]
         end
       end  
-
-      context 'GeoPoint.coord_mode == :lng_lat' do
-        describe '#to_coords' do              
-          it 'should return Array with lng, lat' do
-            GeoPoint.coord_mode = :lng_lat
-            @hash = {:lng => 2, :lat => "3"}
-            @hash.to_coords.should == [2, 3]
-          end
-        end  
-      end
-
-      context 'GeoPoint.coord_mode == :lat_lng' do
-        describe '#to_coords' do              
-          it 'should return Array with lat, lng' do
-            GeoPoint.coord_mode = :lat_lng
-            @hash = {:lng => 2, :lat => "3"}
-            @hash.to_coords.should == [3, 2]
-          end
-        end  
-      end
-      
-      describe '#geo_point' do              
-        context 'GeoPoint.coord_mode == :lat_lng' do
-          it 'should return Array with lng, lat' do
-            GeoPoint.coord_mode = :lat_lng
-            @hash = {:lng => 2, :lat => "3"}
-            p = @hash.geo_point
-            puts p.inspect
-
-            p.to_lng_lat.should == [2, 3]
-          end
-        end
-
-        context 'GeoPoint.coord_mode == :lng_lat' do
-          it 'should return Array with lng, lat' do
-            GeoPoint.coord_mode = :lng_lat
-            @hash = {:lng => 2, :lat => "3"}   
-            p = @hash.geo_point
-            puts p.inspect
-            
-            p.to_lng_lat.should == [2, 3]
-          end
-        end
-      end  
       
     end # Hash 
   end

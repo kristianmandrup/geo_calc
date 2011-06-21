@@ -39,37 +39,3 @@ describe GeoCalc do
   end
 end
 
-class GeoPoint
-  mattr_accessor :coord_mode
-end
-
-describe 'coord mode' do
-  context 'coord_mode = :lng_lat' do
-    before do
-      GeoPoint.coord_mode = :lng_lat
-    end
-    
-    it 'should not reverse array' do
-      [2, 3].to_lng_lat.should == [2, 3]
-    end
-
-    it 'should reverse array' do
-      [2, 3].to_lat_lng.should == [3, 2]
-    end
-  end
-
-  context 'coord_mode = :lat_lng' do
-    before do
-      GeoPoint.coord_mode = :lat_lng
-    end
-    
-    it 'should not reverse array' do
-      [2, 3].to_lat_lng.should == [2, 3]
-    end
-
-    it 'should reverse array' do
-      [2, 3].to_lng_lat.should == [3, 2]
-    end
-  end
-end
-    
