@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{geo_calc}
-  s.version = "0.7.6"
+  s.name = "geo_calc"
+  s.version = "0.7.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Kristian Mandrup}]
-  s.date = %q{2011-06-21}
-  s.description = %q{Geo calculations in ruby and javascript}
-  s.email = %q{kmandrup@gmail.com}
+  s.authors = ["Kristian Mandrup"]
+  s.date = "2012-09-21"
+  s.description = "Geo calculations in ruby and javascript"
+  s.email = "kmandrup@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.textile"
@@ -53,51 +53,48 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
     "vendor/assets/javascript/geo_calc.js"
   ]
-  s.homepage = %q{http://github.com/kristianmandrup/geo_calc}
-  s.licenses = [%q{MIT}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.5}
-  s.summary = %q{Geo calculation library}
+  s.homepage = "http://github.com/kristianmandrup/geo_calc"
+  s.licenses = ["MIT"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.24"
+  s.summary = "Geo calculation library"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<require_all>, ["~> 1.2.0"])
-      s.add_runtime_dependency(%q<sugar-high>, ["~> 0.4.6.3"])
-      s.add_runtime_dependency(%q<geo_units>, ["~> 0.2.1"])
-      s.add_runtime_dependency(%q<i18n>, [">= 0"])
+      s.add_runtime_dependency(%q<require_all>, [">= 1.2.0"])
+      s.add_runtime_dependency(%q<sugar-high>, [">= 0.6.0"])
+      s.add_runtime_dependency(%q<sweetloader>, [">= 0"])
+      s.add_runtime_dependency(%q<geo_units>, [">= 0.3.1"])
+      s.add_runtime_dependency(%q<i18n>, [">= 0.5"])
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.1"])
-      s.add_development_dependency(%q<geo_point>, ["~> 0.2.3"])
       s.add_development_dependency(%q<rspec>, [">= 2.5.0"])
-      s.add_development_dependency(%q<bundler>, [">= 1"])
-      s.add_development_dependency(%q<jeweler>, [">= 1.5.2"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 1.0"])
+      s.add_development_dependency(%q<jeweler>, [">= 1.6.2"])
       s.add_development_dependency(%q<rake>, [">= 0.9"])
     else
-      s.add_dependency(%q<require_all>, ["~> 1.2.0"])
-      s.add_dependency(%q<sugar-high>, ["~> 0.4.6.3"])
-      s.add_dependency(%q<geo_units>, ["~> 0.2.1"])
-      s.add_dependency(%q<i18n>, [">= 0"])
+      s.add_dependency(%q<require_all>, [">= 1.2.0"])
+      s.add_dependency(%q<sugar-high>, [">= 0.6.0"])
+      s.add_dependency(%q<sweetloader>, [">= 0"])
+      s.add_dependency(%q<geo_units>, [">= 0.3.1"])
+      s.add_dependency(%q<i18n>, [">= 0.5"])
       s.add_dependency(%q<activesupport>, [">= 3.0.1"])
-      s.add_dependency(%q<geo_point>, ["~> 0.2.3"])
       s.add_dependency(%q<rspec>, [">= 2.5.0"])
-      s.add_dependency(%q<bundler>, [">= 1"])
-      s.add_dependency(%q<jeweler>, [">= 1.5.2"])
-      s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 1.0"])
+      s.add_dependency(%q<jeweler>, [">= 1.6.2"])
       s.add_dependency(%q<rake>, [">= 0.9"])
     end
   else
-    s.add_dependency(%q<require_all>, ["~> 1.2.0"])
-    s.add_dependency(%q<sugar-high>, ["~> 0.4.6.3"])
-    s.add_dependency(%q<geo_units>, ["~> 0.2.1"])
-    s.add_dependency(%q<i18n>, [">= 0"])
+    s.add_dependency(%q<require_all>, [">= 1.2.0"])
+    s.add_dependency(%q<sugar-high>, [">= 0.6.0"])
+    s.add_dependency(%q<sweetloader>, [">= 0"])
+    s.add_dependency(%q<geo_units>, [">= 0.3.1"])
+    s.add_dependency(%q<i18n>, [">= 0.5"])
     s.add_dependency(%q<activesupport>, [">= 3.0.1"])
-    s.add_dependency(%q<geo_point>, ["~> 0.2.3"])
     s.add_dependency(%q<rspec>, [">= 2.5.0"])
-    s.add_dependency(%q<bundler>, [">= 1"])
-    s.add_dependency(%q<jeweler>, [">= 1.5.2"])
-    s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 1.0"])
+    s.add_dependency(%q<jeweler>, [">= 1.6.2"])
     s.add_dependency(%q<rake>, [">= 0.9"])
   end
 end
