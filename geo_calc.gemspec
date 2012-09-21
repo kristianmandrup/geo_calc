@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "geo_calc"
-  s.version = "0.7.7"
+  s.version = "0.7.7.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
@@ -66,7 +66,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<require_all>, [">= 1.2.0"])
       s.add_runtime_dependency(%q<sugar-high>, [">= 0.6.0"])
       s.add_runtime_dependency(%q<sweetloader>, [">= 0"])
-      s.add_runtime_dependency(%q<geo_units>, [">= 0.3.1"])
+      s.add_runtime_dependency(%q<geo_units>, [">= 0.3.1.1"])
       s.add_runtime_dependency(%q<i18n>, [">= 0.5"])
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.1"])
       s.add_development_dependency(%q<rspec>, [">= 2.5.0"])
@@ -77,7 +77,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<require_all>, [">= 1.2.0"])
       s.add_dependency(%q<sugar-high>, [">= 0.6.0"])
       s.add_dependency(%q<sweetloader>, [">= 0"])
-      s.add_dependency(%q<geo_units>, [">= 0.3.1"])
+      s.add_dependency(%q<geo_units>, [">= 0.3.1.1"])
       s.add_dependency(%q<i18n>, [">= 0.5"])
       s.add_dependency(%q<activesupport>, [">= 3.0.1"])
       s.add_dependency(%q<rspec>, [">= 2.5.0"])
@@ -89,7 +89,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<require_all>, [">= 1.2.0"])
     s.add_dependency(%q<sugar-high>, [">= 0.6.0"])
     s.add_dependency(%q<sweetloader>, [">= 0"])
-    s.add_dependency(%q<geo_units>, [">= 0.3.1"])
+    s.add_dependency(%q<geo_units>, [">= 0.3.1.1"])
     s.add_dependency(%q<i18n>, [">= 0.5"])
     s.add_dependency(%q<activesupport>, [">= 3.0.1"])
     s.add_dependency(%q<rspec>, [">= 2.5.0"])
