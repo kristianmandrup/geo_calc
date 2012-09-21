@@ -30,6 +30,8 @@ class String
     s = geo_clean
     raise GeoDirectionMisMatch, "Direction E and W signify longitude and thus can't be converted to latitude, was: #{self}" if s =~ /[W|E]$/
     s = s.parse_dms if s.respond_to? :parse_dms
+  rescue GeoUnits::Converter::Dms::ParseError
+  ensure
     s.to_f.to_lat
   end
 
@@ -38,6 +40,8 @@ class String
     s = geo_clean                 
     raise GeoDirectionMisMatch, "Direction N and S signify latitude and thus can't be converted to longitude, was: #{self}" if s =~ /[N|S]$/
     s = s.parse_dms if s.respond_to? :parse_dms    
+  rescue GeoUnits::Converter::Dms::ParseError
+  ensure    
     s.to_f.to_lng
   end
 end
