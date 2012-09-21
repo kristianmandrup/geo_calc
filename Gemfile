@@ -1,8 +1,11 @@
 source "http://rubygems.org"
 
 gem "require_all",    ">= 1.2.0"
-gem "sugar-high",     ">= 0.6.0"
-gem "geo_units",      "~> 0.2.6"    
+
+gem "sugar-high",     '>= 0.6.0'
+gem 'sweetloader'
+
+gem "geo_units",      ">= 0.3.1"    
 gem 'i18n',           ">= 0.5"
 gem 'activesupport',  '>= 3.0.1'
 
